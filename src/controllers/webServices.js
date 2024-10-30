@@ -1,4 +1,4 @@
-const urlApi = "http://localhost:4000/";
+const urlApi = "https://tibj7a3gw8.execute-api.us-east-1.amazonaws.com/";
 console.log("url",urlApi);
 
 const urlWebServices = {
