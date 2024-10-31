@@ -13,7 +13,7 @@ export default {
   },
 
   transparent: {
-    main: "ffffff00",
+    main: "rgba(255, 255, 255, 0)", // Transparente en formato rgba()
   },
 
   white: {
