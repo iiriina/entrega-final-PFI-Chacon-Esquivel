@@ -1,4 +1,4 @@
-const urlApi = "https://7v1i3rv75m.execute-api.us-east-1.amazonaws.com/dev";
+const urlApi = "https://4tljb4fp5f.execute-api.us-east-1.amazonaws.com/dev";
 console.log("url",urlApi);
 
 const urlWebServices = {
