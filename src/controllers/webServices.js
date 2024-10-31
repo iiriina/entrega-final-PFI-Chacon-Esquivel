@@ -19,6 +19,11 @@ const urlWebServices = {
     // Endpoint para obtener un envío específico
     getEnvio: urlApi + "api/envios/envio",
 
+    getComputadorasComtrade: urlApi + "api/computers-comtrade/computers-comtrade",
+    getCelularesComtrade: urlApi + "api/cellphones-comtrade/cellphones-comtrade",
+
+
+    //FALTA GET IMPUESTOS PARA EMPRESAS DE CELUS Y COMPUS !!! 
 }
 
 export default urlWebServices;

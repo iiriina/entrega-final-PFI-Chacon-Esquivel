@@ -5,6 +5,8 @@ import Product from "layouts/pages/landing-pages/product";
 import Dashboard from "layouts/dashboard";
 import Celulares from "layouts/pages/landing-pages/cellphones";
 import Presentation from "pages/Presentation";
+import DashboardCelulares from "layouts/dashboardCelulares";
+import DashboardComputadoras from "layouts/dashboardComputadoras";
 
 const routes = [
   {
@@ -35,9 +37,19 @@ const routes = [
     icon: <Icon>dashboard</Icon>,
     collapse: [
       {
-        name: "Dashboard",
-        route: "/pages/dashboard",
+        name: "Predictivo",
+        route: "/pages/dashboardPredictivo",
         component: <Dashboard />,
+      },
+      {
+        name: "Celulares",
+        route: "/pages/dashboardCelulares",
+        component: <DashboardCelulares />,
+      },
+      {
+        name: "Computadoras",
+        route: "/pages/dashboardComputadoras",
+        component: <DashboardComputadoras />,
       }
     ]
   },
