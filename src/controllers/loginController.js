@@ -26,6 +26,15 @@ export const login = async function (login) {
 
     // Manejo de respuestas
     switch (rdo) {
+      case 200: {
+        let user = data.loginUser.user;
+        localStorage.setItem("id", user._id);
+        localStorage.setItem("email", user.email);
+        localStorage.setItem("token", data.loginUser.token);
+        localStorage.setItem("tipoConsumidor", user.tipoConsumidor);
+
+        return { rdo: 0, mensaje: "Ok" }; // correcto
+      }
       case 201: {
         let user = data.loginUser.user;
         localStorage.setItem("id", user._id);
