@@ -3,7 +3,7 @@ import urlWebServices from "./webServices";
 
 export const getComputadoras = async (filters) => {
   let url = urlWebServices.getComputadoras;
-
+ 
   try {
     const queryParams = new URLSearchParams();
     Object.keys(filters).forEach((key) => {
