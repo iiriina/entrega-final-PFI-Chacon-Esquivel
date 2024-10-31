@@ -15,7 +15,7 @@ import samsungImage from "assets/images/268868_u7nsk3.png"; // Imagen por defect
 import './index.css';
 
 // API URL
-const API_URL = "http://localhost:4000/api/cellphone_recommendations/cellphonePorId";
+const API_URL = "https://4tljb4fp5f.execute-api.us-east-1.amazonaws.com/dev/api/cellphone_recommendations/cellphonePorId";
 
 function Overview() {
   const { id } = useParams();
