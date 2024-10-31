@@ -15,7 +15,7 @@ import Card from "@mui/material/Card";
 import './index.css';
 
 // API URL
-const API_URL = "http://localhost:4000/api/computer-prediction/computerPorId";
+const API_URL = "http://34.228.83.83:4000/api/computer-prediction/computerPorId";
 
 function Overview() {
   const { id } = useParams();
