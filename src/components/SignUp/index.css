@@ -108,3 +108,15 @@
   }
 }
 
+.formSignUpContenedor{
+  display: flex;
+  justify-content: center; /* Centrar horizontalmente */
+  align-items: center;     /* Centrar verticalmente */
+
+  max-width: 500px !important; /* Ajusta el ancho aquí */
+  background-color: rgba(255, 255, 255, 0.9); /* Fondo translúcido */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1); /* Sombra */
+  margin: 0 auto; /* Centrar el contenedor horizontalmente */
+  padding: 25px;
+}

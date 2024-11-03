@@ -7,7 +7,6 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../../redux/store';
@@ -75,8 +74,8 @@ export default function SignUp() {
   return (
     <div className="container_general_loginn">
       <ThemeProvider theme={defaultTheme}>
-        <Container component="main" maxWidth="xs" className="form-container">
-          <CssBaseline />
+      <div className='formSignUpContenedor'>
+      <CssBaseline />
           <Box
             sx={{
               marginTop: 3,
@@ -161,7 +160,7 @@ export default function SignUp() {
               </Grid>
             </Box>
           </Box>
-        </Container>
+        </div>
       </ThemeProvider>
     </div>
   );
