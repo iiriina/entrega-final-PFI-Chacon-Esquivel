@@ -74,3 +74,35 @@
 
   max-width: 444px !important;
 }
+
+
+@media (min-width: 576px) {
+  .MuiContainer-root {
+      width: 440px !important;
+
+      max-width: 440px !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .MuiContainer-root {
+      width: 440px !important;
+
+      max-width: 440px !important;
+  }
+}
+
+
+@media (min-width: 992px) {
+  .MuiContainer-root {
+    max-width: 440px !important;
+    width: 440px !important;
+  }
+}
+
+@media (min-width: 1400px) {
+  .MuiContainer-root {
+      width: 440px !important;
+      max-width: 440px !important;
+  }
+}
