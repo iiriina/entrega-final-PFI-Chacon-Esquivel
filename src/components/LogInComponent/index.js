@@ -10,7 +10,6 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useDispatch } from 'react-redux';
 import { login as loginController } from 'controllers/loginController';
@@ -64,7 +63,7 @@ function LogInComponent() {
   return (
     <div className="container_general_loginn">
       <ThemeProvider theme={defaultTheme}>
-        <Container component="main" className="form-container">
+        <div className="formLoginContenedor">
           <CssBaseline />
           <Box
             sx={{
@@ -123,7 +122,7 @@ function LogInComponent() {
               </Grid>
             </Box>
           </Box>
-        </Container>
+        </div>
       </ThemeProvider>
     </div>
   );
