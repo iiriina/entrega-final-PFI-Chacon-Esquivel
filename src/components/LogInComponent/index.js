@@ -4,6 +4,8 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 import { Link as LinkReact } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
@@ -14,14 +16,21 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useDispatch } from 'react-redux';
 import { login as loginController } from 'controllers/loginController';
 import { loginSuccess } from '../../redux/store';
-import { useNavigate } from 'react-router-dom'; // Importa useNavigate
+import { useNavigate } from 'react-router-dom';
 import './index.css';
+
+const defaultTheme = createTheme();
 
 function LogInComponent() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+
+  // Estados para el Snackbar y Alert
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertSeverity, setAlertSeverity] = useState('error');
 
   const handleEmail = (event) => {
     setEmail(event.target.value);
@@ -37,28 +46,39 @@ function LogInComponent() {
         let getLogin = await loginController({ email, password });
         if (getLogin.rdo === 0) {
           dispatch(loginSuccess());
-          navigate('/homePage'); 
+          navigate('/homePage');
         } else if (getLogin.rdo === 1) {
-          alert('El usuario no es válido');
+          setAlertMessage('El usuario no es válido');
+          setAlertSeverity('error');
+          setOpenSnackbar(true);
         }
       } catch (error) {
         console.error('Error al validar el inicio de sesión:', error);
+        setAlertMessage('Error al validar el inicio de sesión');
+        setAlertSeverity('error');
+        setOpenSnackbar(true);
       }
     } else {
-      alert('Debe completar usuario y contraseña');
+      setAlertMessage('Debe completar usuario y contraseña');
+      setAlertSeverity('warning');
+      setOpenSnackbar(true);
     }
   };
-  
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (email !== '' && password !== '') {
       loginUser();
     } else {
-      alert('Debe completar usuario y contraseña');
+      setAlertMessage('Debe completar usuario y contraseña');
+      setAlertSeverity('warning');
+      setOpenSnackbar(true);
     }
   };
 
-  const defaultTheme = createTheme();
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
+  };
 
   return (
     <div className="container_general_loginn">
@@ -102,7 +122,6 @@ function LogInComponent() {
                 name="password"
                 autoComplete="password"
                 onChange={handlePassword}
-                autoFocus
               />
               <Button
                 type="submit"
@@ -114,16 +133,34 @@ function LogInComponent() {
               </Button>
               <Grid container>
                 <Grid item>
-                    <LinkReact to="/signUp" style={{ textDecoration: 'none', color: '#1672d5', fontSize: '14px' }}>
+                  <LinkReact
+                    to="/signUp"
+                    style={{ textDecoration: 'none', color: '#1672d5', fontSize: '14px' }}
+                  >
                     ¿No tenés una cuenta? Crear una.
-                    </LinkReact>
-
+                  </LinkReact>
                 </Grid>
               </Grid>
             </Box>
           </Box>
         </div>
       </ThemeProvider>
+
+      {/* Snackbar para mostrar mensajes de alerta */}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000} // Tiempo en milisegundos antes de que desaparezca
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }} // Posición en la pantalla
+      >
+        <MuiAlert
+          onClose={handleCloseSnackbar}
+          severity={alertSeverity}
+          variant="filled"
+        >
+          {alertMessage}
+        </MuiAlert>
+      </Snackbar>
     </div>
   );
 }

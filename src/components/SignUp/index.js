@@ -7,6 +7,8 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../../redux/store';
@@ -29,8 +31,16 @@ export default function SignUp() {
     nombre: '',
     email: '',
     contrasenia: '',
-    tipoConsumidor: '', // Campo para el tipo de consumidor
+    tipoConsumidor: '',
   });
+
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [alertMessage, setAlertMessage] = React.useState('');
+  const [alertSeverity, setAlertSeverity] = React.useState('success');
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -42,29 +52,39 @@ export default function SignUp() {
 
   const registerUser = async () => {
     try {
-
       const response = await registrarUsuario(userData);
-
-      if (response.rdo === 0) {
-        window.alert('Usuario registrado correctamente, inicie sesión.');
+      console.log(response); // Verifica la estructura de la respuesta
+  
+      // Asegúrate de que `status` y `mensaje` existan en la respuesta
+      if (response.mensaje === "Usuario creado exitosamente") {
+        setAlertMessage('Usuario creado con éxito');
+        setAlertSeverity('success');
+        setOpenSnackbar(true);
         dispatch(loginSuccess());
-        navigate('/login');
+        setTimeout(() => navigate('/login'), 2000);
       } else {
-        window.alert(response.mensaje);
+        setAlertMessage(response.mensaje || 'Hubo un error al crear el usuario'); // Mensaje de error alternativo
+        setAlertSeverity('error');
+        setOpenSnackbar(true);
       }
     } catch (error) {
-      window.alert('Error inesperado al registrar usuario.');
+      console.error('Error al registrar usuario:', error); // Muestra el error en la consola para más detalles
+      setAlertMessage('Error inesperado al registrar usuario.');
+      setAlertSeverity('error');
+      setOpenSnackbar(true);
     }
   };
 
-  const handleSubmit = async (event) => {
+    const handleSubmit = async (event) => {
     event.preventDefault();
 
     const requiredFields = ['nombre', 'email', 'contrasenia', 'tipoConsumidor'];
     const isValid = requiredFields.every((field) => userData[field]);
 
     if (!isValid) {
-      console.error('Por favor, complete todos los campos obligatorios.');
+      setAlertMessage('Por favor, complete todos los campos obligatorios.');
+      setAlertSeverity('warning');
+      setOpenSnackbar(true);
       return;
     }
 
@@ -74,8 +94,8 @@ export default function SignUp() {
   return (
     <div className="container_general_loginn">
       <ThemeProvider theme={defaultTheme}>
-      <div className='formSignUpContenedor'>
-      <CssBaseline />
+        <div className="formSignUpContenedor">
+          <CssBaseline />
           <Box
             sx={{
               marginTop: 3,
@@ -129,7 +149,7 @@ export default function SignUp() {
                   />
                 </Grid>
 
-                {/* Pregunta: Tipo de consumidor */}
+                {/* Tipo de consumidor */}
                 <Grid item xs={12}>
                   <FormControl fullWidth required>
                     <InputLabel id="tipoConsumidor-label">¿Qué información te gustaría ver?</InputLabel>
@@ -162,6 +182,18 @@ export default function SignUp() {
           </Box>
         </div>
       </ThemeProvider>
+
+      {/* Snackbar para mostrar mensajes de alerta */}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <MuiAlert onClose={handleCloseSnackbar} severity={alertSeverity} variant="filled" sx={{ color: 'white' }}>
+          {alertMessage}
+        </MuiAlert>
+      </Snackbar>
     </div>
   );
 }
