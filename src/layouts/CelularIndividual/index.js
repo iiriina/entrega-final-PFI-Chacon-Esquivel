@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 import InfoComputadoras from "examples/Cards/InfoCards/InfoComputadoras";
-import ProfilesList from "examples/Lists/ProfilesList";
+import ImpuestosPuertaAPuertaComputadoras from "components/impuestosPuertaAPuertaCelulares";
 import Header from "layouts/ComputadoraIndividual/componentes/Header2";
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import MKBox from "components/MKBox";
@@ -158,7 +158,7 @@ function Overview() {
 
           {/* Columna para ProfilesList */}
           <Grid item xs={12} xl={4}>
-            <ProfilesList title="Impuestos" productPrice={product?.precio} />
+            <ImpuestosPuertaAPuertaComputadoras title="Impuestos" productPrice={product?.precio} />
           </Grid>
         </Grid>
       </SoftBox>

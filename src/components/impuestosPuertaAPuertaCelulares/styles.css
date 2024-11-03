@@ -1,0 +1,21 @@
+
+
+.MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 css-4jxqa8-MuiGrid-root{
+    background-image: url('../../assets/images/wavescelus44.jpg')  !important; /* Ruta relativa desde tu archivo CSS */
+    background-size: cover; /* Esto asegura que la imagen cubra todo el fondo */
+    background-position: center; /* Centra la imagen en el contenedor */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+
+}
+
+
+.MuiBox-root.css-binzgt {
+    margin-top: 0 !important;
+    max-width: 400px !important;
+}
+
+.css-hltdia{
+    max-width: 400px !important;
+
+}
+

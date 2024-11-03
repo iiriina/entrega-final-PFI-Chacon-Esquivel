@@ -48,7 +48,19 @@ function ProfilesList({ title, productPrice }) {
     };
     fetchData();
   }, []);
-  
+
+  if (!isComprador) {
+    console.log("Apartado de empresa");
+    return (
+      <SoftBox p={2} boxShadow={3} borderRadius="lg">
+        <SoftTypography variant="h6" fontWeight="medium" textTransform="capitalize" color="white">
+          {title}
+        </SoftTypography>
+        <p>Apartado de empresa</p>
+      </SoftBox>
+    );
+  }
+
   // Cálculo de BASE = Precio Mercadería + Envío
   const base = productPrice * quantity + (isComprador ? shippingCost : 0);
   console.log("BASE:", base);
@@ -62,7 +74,7 @@ function ProfilesList({ title, productPrice }) {
   console.log("Total con PAIS:", totalConPAIS);
 
   const impuestoGanancias = base * dolarOficial * puertaAPuertaData.impuestoGanancias;
-  
+
   // Aplicar descuento de 50 USD a TOTAL si los envíos realizados son menores a 12
   const totalAjustado = enviosRealizados < (puertaAPuertaData.cantEnviosGratis || 12)
     ? totalConPAIS - (puertaAPuertaData.limiteSinImpuestos || 50)
@@ -107,11 +119,10 @@ function ProfilesList({ title, productPrice }) {
   const totalSinGananciasARS = subtotalConIVAenARS;
   console.log("Total en ARS sin Impuesto a las Ganancias:", totalSinGananciasARS);
 
-
   const handleEnvioChange = async (event) => {
     const selectedEnvio = event.target.value;
     setEnvio(selectedEnvio);
-    
+
     if (selectedEnvio === "Otro") {
       setShippingCost(0);
     } else {
@@ -126,182 +137,179 @@ function ProfilesList({ title, productPrice }) {
   };
 
   return (
-<SoftBox p={2} boxShadow={3} borderRadius="lg">
-  <SoftTypography variant="h6" fontWeight="medium" textTransform="capitalize" color="white">
-    {title}
-  </SoftTypography>
-
-  <TableContainer sx={{ overflowX: "hidden", mt: 2 }}>
-    <Table sx={{ tableLayout: "fixed", width: "100%" }}>
-      <TableBody>
-        <TableRow>
-          <TableCell align="left">Descripción</TableCell>
-          <TableCell align="left">Cantidad</TableCell>
-          <TableCell align="left">Precio</TableCell>
-          <TableCell align="left">Total</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell align="left">Costo del Producto</TableCell>
-          <TableCell align="left">
-            <TextField 
-              type="number"
-              value={quantity} 
-              onChange={(e) => setQuantity(Math.max(0, parseInt(e.target.value, 10)))} 
-              inputProps={{ min: "0" }} 
-            />
-          </TableCell>
-          <TableCell align="left">${productPrice.toFixed(2)}</TableCell>
-          <TableCell align="left">${(productPrice * quantity).toFixed(2)}</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell align="left">Envíos Realizados</TableCell>
-          <TableCell align="left">
-            <TextField 
-              type="number" 
-              value={enviosRealizados} 
-              onChange={(e) => setEnviosRealizados(Math.max(0, parseInt(e.target.value, 10)))} 
-              inputProps={{ min: "0" }} 
-            />
-          </TableCell>
-        </TableRow>
-        {isComprador && (
-          <TableRow>
-            <TableCell align="left">
-              <Select
-                value={envio}
-                onChange={handleEnvioChange}
-                displayEmpty
-              >
-                <MenuItem value="">Seleccionar Envio</MenuItem>
-                <MenuItem value="Economy">Economy</MenuItem>
-                <MenuItem value="Priority">Priority</MenuItem>
-                <MenuItem value="Otro">Otro</MenuItem>
-              </Select>
-            </TableCell>
-            <TableCell align="left">1</TableCell>
-            <TableCell align="left">
-              {envio === "Otro" ? (
-                <TextField
-                  value={shippingCost}
-                  onChange={(e) => setShippingCost(parseFloat(e.target.value) || 0)}
-                  placeholder="Ingrese el costo"
+    <SoftBox p={2} boxShadow={3} borderRadius="lg">
+      <SoftTypography variant="h6" fontWeight="medium" textTransform="capitalize" color="white">
+        {title}
+      </SoftTypography>
+      {/* Aquí comienza la tabla de cálculos para comprador */}
+      <TableContainer sx={{ overflowX: "hidden", mt: 2 }}>
+        <Table sx={{ tableLayout: "fixed", width: "100%" }}>
+          <TableBody>
+            <TableRow>
+              <TableCell align="left">Descripción</TableCell>
+              <TableCell align="left">Cantidad</TableCell>
+              <TableCell align="left">Precio</TableCell>
+              <TableCell align="left">Total</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell align="left">Costo del Producto</TableCell>
+              <TableCell align="left">
+                <TextField 
                   type="number"
+                  value={quantity} 
+                  onChange={(e) => setQuantity(Math.max(0, parseInt(e.target.value, 10)))} 
+                  inputProps={{ min: "0" }} 
                 />
-              ) : (
-                `$${shippingCost.toFixed(2)}`
-              )}
-            </TableCell>
-            <TableCell align="left">${(productPrice * quantity + shippingCost).toFixed(2)}</TableCell>
-          </TableRow>
-        )}
-        <TableRow>
-          <TableCell align="left">Impuesto PAIS (7.5%)</TableCell>
-          <TableCell align="left">1</TableCell>
-          <TableCell align="left">${impuestoPAIS.toFixed(2)}</TableCell>
-          <TableCell align="left">${(productPrice * quantity + shippingCost + impuestoPAIS).toFixed(2)}</TableCell>
-        </TableRow>
-      </TableBody>
-      <tfoot>
+              </TableCell>
+              <TableCell align="left">${productPrice.toFixed(2)}</TableCell>
+              <TableCell align="left">${(productPrice * quantity).toFixed(2)}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell align="left">Envíos Realizados</TableCell>
+              <TableCell align="left">
+                <TextField 
+                  type="number" 
+                  value={enviosRealizados} 
+                  onChange={(e) => setEnviosRealizados(Math.max(0, parseInt(e.target.value, 10)))} 
+                  inputProps={{ min: "0" }} 
+                />
+              </TableCell>
+            </TableRow>
+            {isComprador && (
+              <TableRow>
+                <TableCell align="left">
+                  <Select
+                    value={envio}
+                    onChange={handleEnvioChange}
+                    displayEmpty
+                  >
+                    <MenuItem value="">Seleccionar Envio</MenuItem>
+                    <MenuItem value="Economy">Economy</MenuItem>
+                    <MenuItem value="Priority">Priority</MenuItem>
+                    <MenuItem value="Otro">Otro</MenuItem>
+                  </Select>
+                </TableCell>
+                <TableCell align="left">1</TableCell>
+                <TableCell align="left">
+                  {envio === "Otro" ? (
+                    <TextField
+                      value={shippingCost}
+                      onChange={(e) => setShippingCost(parseFloat(e.target.value) || 0)}
+                      placeholder="Ingrese el costo"
+                      type="number"
+                    />
+                  ) : (
+                    `$${shippingCost.toFixed(2)}`
+                  )}
+                </TableCell>
+                <TableCell align="left">${(productPrice * quantity + shippingCost).toFixed(2)}</TableCell>
+              </TableRow>
+            )}
+            <TableRow>
+              <TableCell align="left">Impuesto PAIS (7.5%)</TableCell>
+              <TableCell align="left">1</TableCell>
+              <TableCell align="left">${impuestoPAIS.toFixed(2)}</TableCell>
+              <TableCell align="left">${(productPrice * quantity + shippingCost + impuestoPAIS).toFixed(2)}</TableCell>
+            </TableRow>
+          </TableBody>
+          <tfoot>
+            <TableRow>
+              <TableCell colSpan={3} align="right" style={{ fontWeight: "bold" }}>
+                Total en USD:
+              </TableCell>
+              <TableCell align="left" style={{ fontWeight: "bold" }}>
+                ${(productPrice * quantity + shippingCost + impuestoPAIS).toFixed(2)}
+              </TableCell>
+            </TableRow>
+          </tfoot>
+        </Table>
+      </TableContainer>
 
-        <TableRow>
-          <TableCell colSpan={3} align="right" style={{ fontWeight: "bold" }}>
-          Total en USD:
-          </TableCell>
-          <TableCell align="left" style={{ fontWeight: "bold" }}>
-          ${(productPrice * quantity + shippingCost + impuestoPAIS).toFixed(2)}
-          </TableCell>
-        </TableRow>
-      </tfoot>
-    </Table>
-  </TableContainer>
+      {/* Aquí comienza la segunda tabla después del título intermedio */}
+      <SoftTypography variant="h6" fontWeight="medium" textTransform="capitalize" color="white" mt={4}>
+        {"Cálculo impuestos CORREO:"}
+      </SoftTypography>
 
-  {/* Aquí comienza la segunda tabla después del título intermedio */}
-  <SoftTypography variant="h6" fontWeight="medium" textTransform="capitalize" color="white" mt={4}>
-    {"Cálculo impuestos CORREO:"}
-  </SoftTypography>
+      <TableContainer sx={{ overflowX: "hidden", mt: 2 }}>
+        <Table sx={{ tableLayout: "fixed", width: "100%" }}>
+          <TableBody>
+            <TableRow>
+              <TableCell align="left">Descripción</TableCell>
+              <TableCell align="left">Cantidad</TableCell>
+              <TableCell align="left">Precio</TableCell>
+              <TableCell align="left">Total</TableCell>
+            </TableRow>
 
-  <TableContainer sx={{ overflowX: "hidden", mt: 2 }}>
-    <Table sx={{ tableLayout: "fixed", width: "100%" }}>
-      <TableBody>
-        <TableRow>
-          <TableCell align="left">Descripción</TableCell>
-          <TableCell align="left">Cantidad</TableCell>
-          <TableCell align="left">Precio</TableCell>
-          <TableCell align="left">Total</TableCell>
-        </TableRow>
-
-        <TableRow>
-          <TableCell align="left">Derechos de Importación (50%)</TableCell>
-          <TableCell align="left">1</TableCell>
-          <TableCell align="left">${derechosImportacion.toFixed(2)}</TableCell>
-          <TableCell align="left">${(productPrice * quantity + shippingCost + impuestoPAIS + derechosImportacion).toFixed(2)}</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell align="left">Conversión a ARS (Dólar Oficial)</TableCell>
-          <TableCell align="left">{(productPrice * quantity + shippingCost + impuestoPAIS + derechosImportacion).toFixed(2)}</TableCell>
-          <TableCell align="left">${dolarOficial.toFixed(2)}</TableCell>
-          <TableCell align="left">${((productPrice * quantity + shippingCost + impuestoPAIS + derechosImportacion)* dolarOficial.toFixed(2)).toFixed(2)}</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell align="left">Tasa de Correo Argentino</TableCell>
-          <TableCell align="left">1</TableCell>
-          <TableCell align="left">${tasaCorreo.toFixed(2)}</TableCell>
-          <TableCell align="left">${((productPrice * quantity + shippingCost + impuestoPAIS + derechosImportacion)* dolarOficial.toFixed(2) + tasaCorreo).toFixed(2)}</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell align="left">IVA ({puertaAPuertaData.IVA}%)</TableCell>
-          <TableCell align="left">1</TableCell>
-          <TableCell align="left">${(((productPrice * quantity + shippingCost + impuestoPAIS + derechosImportacion)* dolarOficial.toFixed(2) + tasaCorreo) * (puertaAPuertaData.IVA/100)).toFixed(2)}</TableCell>
-          <TableCell align="left">
-              ${(
-                ((productPrice * quantity + shippingCost + impuestoPAIS + derechosImportacion) * dolarOficial + tasaCorreo) * 
-                (1 + puertaAPuertaData.IVA / 100)
-              ).toFixed(2)}
-          </TableCell>
-        </TableRow>
-        <TableCell colSpan={3} align="right" style={{ fontWeight: "bold", color: "gray" }}>
-            Total s/ Imp. Ganancias en ARS:
-          </TableCell>
-          <TableCell align="center" style={{ fontWeight: "bold", color: "gray" }}>
-          ${(
-
-                ((productPrice * quantity + shippingCost + impuestoPAIS + derechosImportacion) * dolarOficial + tasaCorreo) *
-                (1 + puertaAPuertaData.IVA / 100)
-              ).toFixed(2)}          </TableCell>
-
-        <TableRow>
-          <TableCell align="left">Impuesto a las Ganancias (30%)</TableCell>
-          <TableCell align="left">1</TableCell>
-          <TableCell align="left">${impuestoGanancias.toFixed(2)}</TableCell>
-          <TableCell align="left">
-              ${(
-                impuestoGanancias +
-                ((productPrice * quantity + shippingCost + impuestoPAIS + derechosImportacion) * dolarOficial + tasaCorreo) *
-                (1 + puertaAPuertaData.IVA / 100)
-              ).toFixed(2)}
-            </TableCell>
-        </TableRow>
-      </TableBody>
-      <tfoot>
-        <TableRow>
-          <TableCell colSpan={3} align="right" style={{ fontWeight: "bold" }}>
-            Total c/ Imp. Ganancias en ARS:
-          </TableCell>
-          <TableCell align="center" style={{ fontWeight: "bold" }}>
-          ${(
-                impuestoGanancias +
-                ((productPrice * quantity + shippingCost + impuestoPAIS + derechosImportacion) * dolarOficial + tasaCorreo) *
-                (1 + puertaAPuertaData.IVA / 100)
-              ).toFixed(2)}
-          </TableCell>
-        </TableRow>
-        <TableRow>
-        </TableRow>
-
-      </tfoot>
-    </Table>
-  </TableContainer>
-</SoftBox>
+            <TableRow>
+              <TableCell align="left">Derechos de Importación (50%)</TableCell>
+              <TableCell align="left">1</TableCell>
+              <TableCell align="left">${derechosImportacion.toFixed(2)}</TableCell>
+              <TableCell align="left">${(productPrice * quantity + shippingCost + impuestoPAIS + derechosImportacion).toFixed(2)}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell align="left">Conversión a ARS (Dólar Oficial)</TableCell>
+              <TableCell align="left">{(productPrice * quantity + shippingCost + impuestoPAIS + derechosImportacion).toFixed(2)}</TableCell>
+              <TableCell align="left">${dolarOficial.toFixed(2)}</TableCell>
+              <TableCell align="left">${((productPrice * quantity + shippingCost + impuestoPAIS + derechosImportacion) * dolarOficial.toFixed(2)).toFixed(2)}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell align="left">Tasa de Correo Argentino</TableCell>
+              <TableCell align="left">1</TableCell>
+              <TableCell align="left">${tasaCorreo.toFixed(2)}</TableCell>
+              <TableCell align="left">${((productPrice * quantity + shippingCost + impuestoPAIS + derechosImportacion) * dolarOficial.toFixed(2) + tasaCorreo).toFixed(2)}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell align="left">IVA ({puertaAPuertaData.IVA}%)</TableCell>
+              <TableCell align="left">1</TableCell>
+              <TableCell align="left">${(((productPrice * quantity + shippingCost + impuestoPAIS + derechosImportacion) * dolarOficial.toFixed(2) + tasaCorreo) * (puertaAPuertaData.IVA / 100)).toFixed(2)}</TableCell>
+              <TableCell align="left">
+                ${(
+                  ((productPrice * quantity + shippingCost + impuestoPAIS + derechosImportacion) * dolarOficial + tasaCorreo) *
+                  (1 + puertaAPuertaData.IVA / 100)
+                ).toFixed(2)}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell colSpan={3} align="right" style={{ fontWeight: "bold", color: "gray" }}>
+                Total s/ Imp. Ganancias en ARS:
+              </TableCell>
+              <TableCell align="center" style={{ fontWeight: "bold", color: "gray" }}>
+                ${(
+                  ((productPrice * quantity + shippingCost + impuestoPAIS + derechosImportacion) * dolarOficial + tasaCorreo) *
+                  (1 + puertaAPuertaData.IVA / 100)
+                ).toFixed(2)}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell align="left">Impuesto a las Ganancias (30%)</TableCell>
+              <TableCell align="left">1</TableCell>
+              <TableCell align="left">${impuestoGanancias.toFixed(2)}</TableCell>
+              <TableCell align="left">
+                ${(
+                  impuestoGanancias +
+                  ((productPrice * quantity + shippingCost + impuestoPAIS + derechosImportacion) * dolarOficial + tasaCorreo) *
+                  (1 + puertaAPuertaData.IVA / 100)
+                ).toFixed(2)}
+              </TableCell>
+            </TableRow>
+          </TableBody>
+          <tfoot>
+            <TableRow>
+              <TableCell colSpan={3} align="right" style={{ fontWeight: "bold" }}>
+                Total c/ Imp. Ganancias en ARS:
+              </TableCell>
+              <TableCell align="center" style={{ fontWeight: "bold" }}>
+                ${(
+                  impuestoGanancias +
+                  ((productPrice * quantity + shippingCost + impuestoPAIS + derechosImportacion) * dolarOficial + tasaCorreo) *
+                  (1 + puertaAPuertaData.IVA / 100)
+                ).toFixed(2)}
+              </TableCell>
+            </TableRow>
+          </tfoot>
+        </Table>
+      </TableContainer>
+    </SoftBox>
   );
 }
 

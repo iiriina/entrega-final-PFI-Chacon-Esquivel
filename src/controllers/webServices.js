@@ -22,8 +22,8 @@ const urlWebServices = {
     getComputadorasComtrade: urlApi + "api/computers-comtrade/computers-comtrade",
     getCelularesComtrade: urlApi + "api/cellphones-comtrade/cellphones-comtrade",
 
-
-    //FALTA GET IMPUESTOS PARA EMPRESAS DE CELUS Y COMPUS !!! 
+    getEmpresasCelulares: urlApi + "api/tributosCelulares/tributosCelulares",
+    getEmpresasComputadoras: urlApi + "api/tributosComputadoras/tributosComputadoras"
 }
 
 export default urlWebServices;
