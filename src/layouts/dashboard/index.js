@@ -12,7 +12,22 @@ import { getPredictions } from "controllers/getPredictions";
 
 function Dashboard() {
   const [showSecondLine, setShowSecondLine] = useState(false);
-  const [chartData, setChartData] = useState({ labels: [], datasets: [] }); // Ensure initial structure
+  const [chartData, setChartData] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: "Historical Data",
+        color: "turquoise",
+        data: [],
+      },
+      {
+        label: "Predictions",
+        color: "violet",
+        data: [],
+        spanGaps: true,
+      },
+    ],
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,24 +42,22 @@ function Dashboard() {
         const futureDataWithNulls = [...nullsForFutureData, ...futureData];
         const allLabels = [...historicalDates, ...futureDates];
 
-        const historicalDataset = {
-          label: "Historical Data",
-          color: "turquoise",
-          data: historicalData,
-        };
-
-        const futureDataset = {
-          label: "Predictions",
-          color: "violet",
-          data: futureDataWithNulls,
-          spanGaps: true,
-        };
-
+        // Update chartData with structured data
         setChartData({
           labels: allLabels,
-          datasets: showSecondLine
-            ? [historicalDataset, futureDataset]
-            : [historicalDataset],
+          datasets: [
+            {
+              label: "Historical Data",
+              color: "turquoise",
+              data: historicalData,
+            },
+            {
+              label: "Predictions",
+              color: "violet",
+              data: futureDataWithNulls,
+              spanGaps: true,
+            },
+          ],
         });
       } catch (error) {
         console.error("Error fetching predictions:", error);
@@ -82,10 +95,10 @@ function Dashboard() {
                       </SoftBox>
                     }
                     height="20.25rem"
-                    chart={chartData} // Use loaded data
+                    chart={chartData} // Use structured chartData
                   />
                 ) : (
-                  <div style={{ height: "20.25rem" }} /> // Placeholder when data is not ready
+                  <div style={{ height: "20.25rem" }} /> // Placeholder for loading
                 )}
                 <Button
                   variant="contained"
