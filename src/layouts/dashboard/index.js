@@ -38,19 +38,19 @@ function Dashboard() {
         const allLabels = [...historicalDates, ...futureDates];
         console.log("All Labels Combined:", allLabels);
 
-        // Update chartData with structured data
+        // Update chartData with structured data and add fallbacks
         const updatedChartData = {
-          labels: allLabels,
+          labels: allLabels || [],  // Fallback if labels are undefined
           datasets: [
             {
               label: "Historical Data",
               color: "turquoise",
-              data: historicalData,
+              data: historicalData || [],  // Fallback if data is undefined
             },
             {
               label: "Predictions",
               color: "violet",
-              data: futureDataWithNulls,
+              data: futureDataWithNulls || [],  // Fallback if data is undefined
               spanGaps: true,
             },
           ],
@@ -82,30 +82,29 @@ function Dashboard() {
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <SoftBox position="relative">
-                {/* Check if chartData exists and has labels */}
-                {chartData ? (
-                  chartData.labels && chartData.labels.length > 0 ? (
-                    <>
-                      <GradientLineChart
-                        title="Importación de Celulares y Computadoras"
-                        description={
-                          <SoftBox display="flex" alignItems="center">
-                            <SoftTypography variant="button" color="text" fontWeight="medium">
-                              Argentina{" "}
-                              <SoftTypography variant="button" color="text" fontWeight="regular">
-                                2017 - 2024
-                              </SoftTypography>
+                {/* Check if chartData is defined and has labels */}
+                {chartData && chartData.labels.length > 0 ? (
+                  <>
+                    <GradientLineChart
+                      title="Importación de Celulares y Computadoras"
+                      description={
+                        <SoftBox display="flex" alignItems="center">
+                          <SoftTypography variant="button" color="text" fontWeight="medium">
+                            Argentina{" "}
+                            <SoftTypography variant="button" color="text" fontWeight="regular">
+                              2017 - 2024
                             </SoftTypography>
-                          </SoftBox>
-                        }
-                        height="20.25rem"
-                        chart={chartData} // Use structured chartData
-                      />
-                      {console.log("Rendering GradientLineChart with data:", chartData)}
-                    </>
-                  ) : (
-                    console.log("Chart data is available, but 'labels' is empty or undefined.")
-                  )
+                          </SoftTypography>
+                        </SoftBox>
+                      }
+                      height="20.25rem"
+                      chart={{
+                        labels: chartData.labels || [],  // Fallback to empty array
+                        datasets: chartData.datasets || [],  // Fallback to empty array
+                      }}
+                    />
+                    {console.log("Rendering GradientLineChart with data:", chartData)}
+                  </>
                 ) : (
                   <div style={{ height: "20.25rem", textAlign: "center" }}>
                     Loading chart data...
