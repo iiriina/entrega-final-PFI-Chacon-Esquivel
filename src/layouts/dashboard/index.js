@@ -17,18 +17,29 @@ function Dashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log("Fetching predictions...");
         const predictions = await getPredictions();
+        console.log("Predictions received:", predictions);
+
         const historicalData = predictions.historicalValues;
         const historicalDates = predictions.historicalDates;
         const futureData = predictions.futurePredictions;
         const futureDates = predictions.futureDates;
 
+        console.log("Historical Data:", historicalData);
+        console.log("Historical Dates:", historicalDates);
+        console.log("Future Data:", futureData);
+        console.log("Future Dates:", futureDates);
+
         const nullsForFutureData = new Array(historicalDates.length - 1).fill(null);
         const futureDataWithNulls = [...nullsForFutureData, ...futureData];
+        console.log("Future Data with Nulls:", futureDataWithNulls);
+
         const allLabels = [...historicalDates, ...futureDates];
+        console.log("All Labels Combined:", allLabels);
 
         // Update chartData with structured data
-        setChartData({
+        const updatedChartData = {
           labels: allLabels,
           datasets: [
             {
@@ -43,7 +54,11 @@ function Dashboard() {
               spanGaps: true,
             },
           ],
-        });
+        };
+        
+        console.log("Updated Chart Data:", updatedChartData);
+
+        setChartData(updatedChartData);
       } catch (error) {
         console.error("Error fetching predictions:", error);
       }
@@ -53,6 +68,7 @@ function Dashboard() {
   }, [showSecondLine]);
 
   const handleToggleLine = () => {
+    console.log("Toggling second line visibility...");
     setShowSecondLine(!showSecondLine);
   };
 
@@ -66,23 +82,30 @@ function Dashboard() {
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <SoftBox position="relative">
-                {/* Check if chartData is defined and has labels */}
-                {chartData && chartData.labels.length > 0 ? (
-                  <GradientLineChart
-                    title="Importación de Celulares y Computadoras"
-                    description={
-                      <SoftBox display="flex" alignItems="center">
-                        <SoftTypography variant="button" color="text" fontWeight="medium">
-                          Argentina{" "}
-                          <SoftTypography variant="button" color="text" fontWeight="regular">
-                            2017 - 2024
-                          </SoftTypography>
-                        </SoftTypography>
-                      </SoftBox>
-                    }
-                    height="20.25rem"
-                    chart={chartData} // Use structured chartData
-                  />
+                {/* Check if chartData exists and has labels */}
+                {chartData ? (
+                  chartData.labels && chartData.labels.length > 0 ? (
+                    <>
+                      <GradientLineChart
+                        title="Importación de Celulares y Computadoras"
+                        description={
+                          <SoftBox display="flex" alignItems="center">
+                            <SoftTypography variant="button" color="text" fontWeight="medium">
+                              Argentina{" "}
+                              <SoftTypography variant="button" color="text" fontWeight="regular">
+                                2017 - 2024
+                              </SoftTypography>
+                            </SoftTypography>
+                          </SoftBox>
+                        }
+                        height="20.25rem"
+                        chart={chartData} // Use structured chartData
+                      />
+                      {console.log("Rendering GradientLineChart with data:", chartData)}
+                    </>
+                  ) : (
+                    console.log("Chart data is available, but 'labels' is empty or undefined.")
+                  )
                 ) : (
                   <div style={{ height: "20.25rem", textAlign: "center" }}>
                     Loading chart data...
