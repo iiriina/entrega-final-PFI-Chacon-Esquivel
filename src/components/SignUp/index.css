@@ -62,6 +62,14 @@
 
   @media (min-width: 0px) {
     .css-hltdia {
+        max-width: unset; /* Restablece al valor heredado o inicial */
         max-width: 450px !important;
     }
+}
+
+
+.css-hltdia {
+  max-width: unset; /* Restablece al valor heredado o inicial */
+
+  max-width: 444px !important;
 }

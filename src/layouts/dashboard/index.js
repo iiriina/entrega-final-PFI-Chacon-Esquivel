@@ -98,7 +98,9 @@ function Dashboard() {
                     <Line data={chartData} options={{ responsive: true }} style={{ maxHeight: "550px" }} />
                   </Card>
                 ) : (
-                  <div style={{ height: "20.25rem" }} /> // Espacio vacío con la misma altura del gráfico
+                  <SoftTypography variant="h5" align="center" color="textSecondary" sx={{ height: "20.25rem", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    Cargando...
+                  </SoftTypography>
                 )}
                 <SoftBox
                   position="absolute"
