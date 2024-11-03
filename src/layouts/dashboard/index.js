@@ -82,8 +82,8 @@ function Dashboard() {
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <SoftBox position="relative">
-                {/* Check if chartData is defined and has labels */}
-                {chartData && chartData.labels.length > 0 ? (
+                {/* Check if chartData is defined, and if it has labels and datasets */}
+                {chartData && chartData.labels && chartData.datasets && chartData.labels.length > 0 ? (
                   <>
                     <GradientLineChart
                       title="Importación de Celulares y Computadoras"
@@ -99,8 +99,8 @@ function Dashboard() {
                       }
                       height="20.25rem"
                       chart={{
-                        labels: chartData.labels || [],  // Fallback to empty array
-                        datasets: chartData.datasets || [],  // Fallback to empty array
+                        labels: chartData.labels,  // Assuming chartData.labels is always an array
+                        datasets: chartData.datasets,  // Assuming chartData.datasets is always an array
                       }}
                     />
                     {console.log("Rendering GradientLineChart with data:", chartData)}
