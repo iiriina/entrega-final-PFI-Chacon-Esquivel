@@ -5,8 +5,8 @@
     width: 100%;
     height: 100%;
     display: flex;
-    justify-content: center; /* Centrar horizontalmente */
-    align-items: center;     /* Centrar verticalmente */
+    justify-content: center; 
+    align-items: center;     
     background-image: url('../../assets/images/fondologin.jpg'); 
     background-size: cover;
     background-repeat: no-repeat; 
@@ -14,8 +14,8 @@
 }
 .form-container {
     display: flex;
-    justify-content: center; /* Centrar horizontalmente */
-    align-items: center;     /* Centrar verticalmente */
+    justify-content: center; 
+    align-items: center;     
 
     margin: auto;
     padding: 3px;
@@ -33,29 +33,48 @@
   }
 
 .MuiBox-root.css-binzgt {
-    margin-top: 0px !important; /* Sobrescribir el margen superior */
+    margin-top: 0px !important; 
 
     max-width: 400px !important;
 }
 
 .MuiContainer-root.MuiContainer-maxWidthLg.form-container.css-1oqqzyl-MuiContainer-root {
     display: flex;
-    justify-content: center; /* Centrar horizontalmente */
-    align-items: center;     /* Centrar verticalmente */
-    padding: 20px 0 !important; /* Sin comillas en el valor de padding */
+    justify-content: center; 
+    align-items: center;    
+    padding: 20px 0 !important; 
 
     max-width: 460px !important;
   }
   
 .login-container {
     display: flex;
-    justify-content: center; /* Centrar horizontalmente */
-    align-items: center;     /* Centrar verticalmente */
+    justify-content: center; 
+    align-items: center;   
 
-    max-width: 200px !important; /* Ajusta el ancho aquí */
-    background-color: rgba(255, 255, 255, 0.9); /* Fondo translúcido */
-    border-radius: 10px; /* Bordes redondeados */
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1); /* Sombra */
-    margin: 0 auto; /* Centrar el contenedor horizontalmente */
+    max-width: 200px !important; 
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px; 
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1); 
+    margin: 0 auto; 
   }
 
+  @media (min-width: 1200px) {
+    .css-1qsxih2 {
+        max-width: 400px !important;
+    }
+  }
+
+  @media (min-width: 600px) {
+    .css-1qsxih2 {
+        padding-left: 24px;
+        padding-right: 24px;
+        max-width: 400px !important;
+
+    }
+}
+
+.css-1qsxih2 {
+  max-width: 400px !important;
+
+}

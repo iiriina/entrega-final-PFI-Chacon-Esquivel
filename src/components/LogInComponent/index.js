@@ -22,7 +22,7 @@ function LogInComponent() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // Obtén la función de navegación desde el hook useNavigate
+  const navigate = useNavigate(); 
 
   const handleEmail = (event) => {
     setEmail(event.target.value);
@@ -37,8 +37,8 @@ function LogInComponent() {
       try {
         let getLogin = await loginController({ email, password });
         if (getLogin.rdo === 0) {
-          dispatch(loginSuccess()); // Despacha la acción de inicio de sesión exitoso
-          navigate('/homePage'); // Navega a la ruta deseada
+          dispatch(loginSuccess());
+          navigate('/homePage'); 
         } else if (getLogin.rdo === 1) {
           alert('El usuario no es válido');
         }

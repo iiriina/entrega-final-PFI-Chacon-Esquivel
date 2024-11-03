@@ -43,7 +43,7 @@ export default function SignUp() {
 
   const registerUser = async () => {
     try {
-      // Llamada a la API o controlador que maneja el registro
+
       const response = await registrarUsuario(userData);
 
       if (response.rdo === 0) {

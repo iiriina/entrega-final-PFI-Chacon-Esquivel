@@ -59,3 +59,9 @@
     margin: 0 auto; /* Centrar el contenedor horizontalmente */
   }
 
+
+  @media (min-width: 0px) {
+    .css-hltdia {
+        max-width: 450px !important;
+    }
+}
