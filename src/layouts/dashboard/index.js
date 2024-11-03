@@ -12,22 +12,7 @@ import { getPredictions } from "controllers/getPredictions";
 
 function Dashboard() {
   const [showSecondLine, setShowSecondLine] = useState(false);
-  const [chartData, setChartData] = useState({
-    labels: [],
-    datasets: [
-      {
-        label: "Historical Data",
-        color: "turquoise",
-        data: [],
-      },
-      {
-        label: "Predictions",
-        color: "violet",
-        data: [],
-        spanGaps: true,
-      },
-    ],
-  });
+  const [chartData, setChartData] = useState(null); // Start with null to check if data is loaded
 
   useEffect(() => {
     const fetchData = async () => {
@@ -81,7 +66,8 @@ function Dashboard() {
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <SoftBox position="relative">
-                {chartData.labels.length > 0 ? (
+                {/* Check if chartData is defined and has labels */}
+                {chartData && chartData.labels.length > 0 ? (
                   <GradientLineChart
                     title="Importación de Celulares y Computadoras"
                     description={
@@ -98,7 +84,9 @@ function Dashboard() {
                     chart={chartData} // Use structured chartData
                   />
                 ) : (
-                  <div style={{ height: "20.25rem" }} /> // Placeholder for loading
+                  <div style={{ height: "20.25rem", textAlign: "center" }}>
+                    Loading chart data...
+                  </div>
                 )}
                 <Button
                   variant="contained"
