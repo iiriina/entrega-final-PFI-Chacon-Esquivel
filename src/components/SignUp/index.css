@@ -16,7 +16,8 @@
     display: flex;
     justify-content: center; /* Centrar horizontalmente */
     align-items: center;     /* Centrar verticalmente */
-
+    width: 400px;
+    max-width: 400px;
     margin: auto;
     padding: 3px;
     background-color: rgba(255, 255, 255, 0.8);
@@ -106,3 +107,4 @@
       max-width: 440px !important;
   }
 }
+
