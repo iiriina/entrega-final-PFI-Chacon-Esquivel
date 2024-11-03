@@ -11,36 +11,41 @@ import GradientLineChart from "examples/Charts/LineCharts/GradientLineChart";
 import { getPredictions } from "controllers/getPredictions";
 
 function Dashboard() {
-  const [showSecondLine, setShowSecondLine] = useState(false);
-  const [chartData, setChartData] = useState(null); // Start with null to indicate loading
+  const [showPredictions, setShowPredictions] = useState(false);
+  const [chartData, setChartData] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: "Historical Data",
+        color: "turquoise",
+        data: [],
+      },
+      {
+        label: "Predictions",
+        color: "violet",
+        data: [],
+        spanGaps: true,
+      },
+    ],
+  });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("Fetching predictions...");
         const predictions = await getPredictions();
-        console.log("Predictions received:", predictions);
 
-        const historicalData = predictions.historicalValues;
-        const historicalDates = predictions.historicalDates;
-        const futureData = predictions.futurePredictions;
-        const futureDates = predictions.futureDates;
+        const historicalData = predictions.historicalValues || [];
+        const historicalDates = predictions.historicalDates || [];
+        const futureData = predictions.futurePredictions || [];
+        const futureDates = predictions.futureDates || [];
 
-        console.log("Historical Data:", historicalData);
-        console.log("Historical Dates:", historicalDates);
-        console.log("Future Data:", futureData);
-        console.log("Future Dates:", futureDates);
+        const futureDataWithNulls = [
+          ...new Array(historicalDates.length - 1).fill(null),
+          ...futureData,
+        ];
 
-        const nullsForFutureData = new Array(historicalDates.length - 1).fill(null);
-        const futureDataWithNulls = [...nullsForFutureData, ...futureData];
-        console.log("Future Data with Nulls:", futureDataWithNulls);
-
-        const allLabels = [...historicalDates, ...futureDates];
-        console.log("All Labels Combined:", allLabels);
-
-        // Update chartData with structured data
-        const updatedChartData = {
-          labels: allLabels,  // Real labels once data is fetched
+        setChartData({
+          labels: [...historicalDates, ...futureDates],
           datasets: [
             {
               label: "Historical Data",
@@ -54,22 +59,16 @@ function Dashboard() {
               spanGaps: true,
             },
           ],
-        };
-        
-        console.log("Updated Chart Data:", updatedChartData);
-        setChartData(updatedChartData);
+        });
       } catch (error) {
         console.error("Error fetching predictions:", error);
       }
     };
 
     fetchData();
-  }, [showSecondLine]);
+  }, []);
 
-  const handleToggleLine = () => {
-    console.log("Toggling second line visibility...");
-    setShowSecondLine(!showSecondLine);
-  };
+  const togglePredictions = () => setShowPredictions(!showPredictions);
 
   return (
     <>
@@ -81,8 +80,7 @@ function Dashboard() {
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <SoftBox position="relative">
-                {/* Render only when chartData is fully available */}
-                {chartData ? (
+                {chartData.labels.length > 0 ? (
                   <GradientLineChart
                     title="Importación de Celulares y Computadoras"
                     description={
@@ -96,10 +94,12 @@ function Dashboard() {
                       </SoftBox>
                     }
                     height="20.25rem"
-                    chart={chartData}
+                    chart={{
+                      labels: chartData.labels,
+                      datasets: showPredictions ? chartData.datasets : [chartData.datasets[0]],
+                    }}
                   />
                 ) : (
-                  // Display a loading message while data is being fetched
                   <div style={{ height: "20.25rem", textAlign: "center" }}>
                     Loading chart data...
                   </div>
@@ -107,7 +107,7 @@ function Dashboard() {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={handleToggleLine}
+                  onClick={togglePredictions}
                   style={{
                     position: "absolute",
                     top: "1rem",
@@ -116,7 +116,7 @@ function Dashboard() {
                     color: "black",
                   }}
                 >
-                  {showSecondLine ? "Hide predictions" : "Show predictions"}
+                  {showPredictions ? "Hide predictions" : "Show predictions"}
                 </Button>
               </SoftBox>
             </Grid>
