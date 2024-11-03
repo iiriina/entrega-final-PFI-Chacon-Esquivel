@@ -77,19 +77,19 @@ function Dashboard() {
             <Grid item xs={12}>
               <SoftBox position="relative">
               <SoftBox mb={3}>
-  <SoftTypography variant="h5" fontWeight="medium" mb={1}>
-    Importación de Celulares y Computadoras
-  </SoftTypography>
-  <SoftTypography variant="body2" color="text">
-    (En millones de USD).
-    <br />
-  </SoftTypography>
+                <SoftTypography variant="h5" fontWeight="medium" mb={1}>
+                  Importación de Celulares y Computadoras
+                </SoftTypography>
+                <SoftTypography variant="body2" color="text">
+                  (En millones de USD).
+                  <br />
+                </SoftTypography>
 
-  <SoftTypography variant="body2" color="text">
-    Argentina 2017 - 2024.
-    <br />
-  </SoftTypography>
-</SoftBox>
+                <SoftTypography variant="body2" color="text">
+                  Argentina 2017 - 2024.
+                  <br />
+                </SoftTypography>
+              </SoftBox>
 
                 {/* Mostrar el gráfico solo cuando los datos estén disponibles */}
                 {chartData ? (
@@ -100,48 +100,48 @@ function Dashboard() {
                 ) : (
                   <div style={{ height: "20.25rem" }} /> // Espacio vacío con la misma altura del gráfico
                 )}
-<SoftBox
-  position="absolute"
-  top="1rem"
-  right="1rem"
-  display="flex"
-  alignItems="center"
-  gap={2} // Espacio entre el Card y el Button
-  mt={-2.5} // Margen superior negativo para acercarlo más a la barra superior
->
-  <Card
-    sx={{
-      p: 2,
-      borderRadius: "lg",
-      boxShadow: "lg",
-      backgroundColor: "white",
-      height: "100%",
-      width: "200px",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-    }}
-  >
-    <SoftTypography variant="body2" color="text">
-      Precio Dólar Hoy:{" "}
-      <span style={{ fontWeight: "bold", color: "rgba(75,192,192,1)" }}>
-        ${dolarOficial}
-      </span>
-    </SoftTypography>
-  </Card>
-  
-  <Button
-    variant="contained"
-    color="primary"
-    onClick={handleTogglePredictions}
-    style={{
-      backgroundColor: "white",
-      color: "black",
-    }}
-  >
-    {showPredictions ? "Hide predictions" : "Show predictions"}
-  </Button>
-</SoftBox>
+                <SoftBox
+                  position="absolute"
+                  top="1rem"
+                  right="1rem"
+                  display="flex"
+                  alignItems="center"
+                  gap={2} // Espacio entre el Card y el Button
+                  mt={-2.5} // Margen superior negativo para acercarlo más a la barra superior
+                >
+                  <Card
+                    sx={{
+                      p: 2,
+                      borderRadius: "lg",
+                      boxShadow: "lg",
+                      backgroundColor: "white",
+                      height: "100%",
+                      width: "200px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <SoftTypography variant="body2" color="text">
+                      Precio Dólar Hoy:{" "}
+                      <span style={{ fontWeight: "bold", color: "rgba(75,192,192,1)" }}>
+                        ${dolarOficial}
+                      </span>
+                    </SoftTypography>
+                  </Card>
+                  
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleTogglePredictions}
+                    style={{
+                      backgroundColor: "white",
+                      color: "black",
+                    }}
+                  >
+                    {showPredictions ? "Hide predictions" : "Show predictions"}
+                  </Button>
+                </SoftBox>
 
                 
               </SoftBox>

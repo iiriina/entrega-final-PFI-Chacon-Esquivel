@@ -8,6 +8,7 @@ import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 import { Bar, Pie, Line } from 'react-chartjs-2';
 import { getCellphonesComtrade } from "controllers/getCelularesComtrade";
+import Card from "@mui/material/Card";
 
 function DashboardCelulares() {
   const [tradeData, setTradeData] = useState({
@@ -211,36 +212,65 @@ function DashboardCelulares() {
       <MKBox position="fixed" top="0.5rem" width="100%" zIndex={10}>
         <DefaultNavbar routes={routes} />
       </MKBox>
-      <MKBox component="section" py={6} mt={9.2}>
+      <MKBox component="section" py={6} mt={6.2}>
         <Container>
-          <SoftBox mb={3}>
-            <SoftTypography variant="h4" fontWeight="medium">
-              Estadísticas - Celulares.
+          <SoftBox mb={2}>
+            <SoftTypography variant="h5" fontWeight="medium">
+              Estadísticas de Celulares.
             </SoftTypography>
           </SoftBox>
           <Grid container spacing={3}>
             {/* Bar charts */}
+
+
+
             <Grid item xs={12} md={6}>
+            <Card sx={{ p: 3, borderRadius: "lg", boxShadow: "lg", backgroundColor: "white", height: "100%" }}>
+
               <div style={{ width: '100%', height: '100%' }}>
                 <Bar data={tradeData} options={{ responsive: true, plugins: { legend: { position: 'top' }, title: { display: true, text: 'Importaciones de Celulares - Trade Value' }}}}/>
               </div>
+              </Card>
+
             </Grid>
+
+
+
+
+
+
+
             <Grid item xs={12} md={6}>
-              <div style={{ width: '100%', height: '100%' }}>
-                <Bar data={usaPesoData} options={{ responsive: true, plugins: { legend: { position: 'top' }, title: { display: true, text: 'Importaciones de Celulares - Peso (KG) USA' }}}}/>
-              </div>
+            <Card sx={{ p: 3, borderRadius: "lg", boxShadow: "lg", backgroundColor: "white", height: "100%" }}>
+
+                <div style={{ width: '100%', height: '100%' }}>
+                  <Bar data={usaPesoData} options={{ responsive: true, plugins: { legend: { position: 'top' }, title: { display: true, text: 'Importaciones de Celulares - Peso (KG) USA' }}}}/>
+                </div>
+              </Card>
+
             </Grid>
+
+
+
             {/* Pie chart and USA line chart */}
             <Grid item xs={12} md={6}>
-              <div style={{ width: '80%', height: '300px', margin: '0 auto' }}>
-                <Pie data={topCountriesData} options={{ responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' }, title: { display: true, text: 'Top 8 Países Importadores por Trade Value (2024)' }}}}/>
-              </div>
+              <Card sx={{ p: 3, borderRadius: "lg", boxShadow: "lg", backgroundColor: "white", height: "100%" }}>
+
+                <div style={{ width: '80%', height: '300px', margin: '0 auto' }}>
+                  <Pie data={topCountriesData} options={{ responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' }, title: { display: true, text: 'Top 8 Países Importadores por Trade Value (2024)' }}}}/>
+                </div>
+              </Card>
+
             </Grid>
 
             <Grid item xs={12} md={6}>
-              <div style={{ width: '100%', height: '100%' }}>
-                <Line data={usaTradeData} options={{ responsive: true, plugins: { legend: { position: 'top' }, title: { display: true, text: 'USA Trade Value (2024)' }}}}/>
-              </div>
+              <Card sx={{ p: 3, borderRadius: "lg", boxShadow: "lg", backgroundColor: "white", height: "100%" }}>
+
+                <div style={{ width: '100%', height: '100%' }}>
+                  <Line data={usaTradeData} options={{ responsive: true, plugins: { legend: { position: 'top' }, title: { display: true, text: 'USA Trade Value (2024)' }}}}/>
+                </div>
+              </Card>
+
             </Grid>
           </Grid>
         </Container>
