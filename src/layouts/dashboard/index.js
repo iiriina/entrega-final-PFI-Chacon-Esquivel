@@ -12,22 +12,7 @@ import { getPredictions } from "controllers/getPredictions";
 
 function Dashboard() {
   const [showSecondLine, setShowSecondLine] = useState(false);
-  const [chartData, setChartData] = useState({
-    labels: Array(10).fill("00-0000"), // Default placeholder labels
-    datasets: [
-      {
-        label: "Historical Data",
-        color: "turquoise",
-        data: Array(10).fill(null), // Default placeholder data
-      },
-      {
-        label: "Predictions",
-        color: "violet",
-        data: Array(10).fill(null), // Default placeholder data
-        spanGaps: true,
-      },
-    ],
-  });
+  const [chartData, setChartData] = useState(null); // Start with null to indicate loading
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,24 +40,23 @@ function Dashboard() {
 
         // Update chartData with structured data
         const updatedChartData = {
-          labels: allLabels || Array(10).fill("00-0000"),  // Fallback to default labels if labels are undefined
+          labels: allLabels,  // Real labels once data is fetched
           datasets: [
             {
               label: "Historical Data",
               color: "turquoise",
-              data: historicalData || Array(10).fill(null),  // Fallback to default data if undefined
+              data: historicalData,
             },
             {
               label: "Predictions",
               color: "violet",
-              data: futureDataWithNulls || Array(10).fill(null),  // Fallback to default data if undefined
+              data: futureDataWithNulls,
               spanGaps: true,
             },
           ],
         };
         
         console.log("Updated Chart Data:", updatedChartData);
-
         setChartData(updatedChartData);
       } catch (error) {
         console.error("Error fetching predictions:", error);
@@ -97,8 +81,8 @@ function Dashboard() {
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <SoftBox position="relative">
-                {/* Check if chartData is defined and has labels */}
-                {chartData && chartData.labels.length > 0 ? (
+                {/* Render only when chartData is fully available */}
+                {chartData ? (
                   <GradientLineChart
                     title="Importación de Celulares y Computadoras"
                     description={
@@ -112,12 +96,10 @@ function Dashboard() {
                       </SoftBox>
                     }
                     height="20.25rem"
-                    chart={{
-                      labels: chartData.labels,
-                      datasets: chartData.datasets,
-                    }}
+                    chart={chartData}
                   />
                 ) : (
+                  // Display a loading message while data is being fetched
                   <div style={{ height: "20.25rem", textAlign: "center" }}>
                     Loading chart data...
                   </div>
