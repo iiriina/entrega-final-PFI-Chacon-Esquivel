@@ -97,11 +97,11 @@ function Overview() {
               boxShadow: ({ boxShadows: { navbarBoxShadow } }) => navbarBoxShadow,
             }}
           >
-            <img
-              src={Array.isArray(product?.imagenes) ? product?.imagenes[0] : samsungImage}
-              alt={product?.nombre || "Producto"}
-              style={{ width: "60%", borderRadius: "10px" }}
-            />
+          <img
+                src={product?.imagen || samsungImage}
+                alt={product?.nombre || "Producto"}
+                style={{ maxWidth: "490px", borderRadius: "10px" }}
+              />
           </SoftBox>
         </div>
 
