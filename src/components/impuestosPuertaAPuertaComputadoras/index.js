@@ -411,7 +411,7 @@ if (tributosData) {
 
 
           <TableRow>
-            <TableCell align="left">Cantidad de Celulares</TableCell>
+            <TableCell align="left">Cantidad de Computadoras</TableCell>
             <TableCell align="left">
               <TextField
                 type="number"
