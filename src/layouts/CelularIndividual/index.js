@@ -71,98 +71,88 @@ function Overview() {
   }, {});
 
   return (
-    <>
-      <MKBox position="fixed" top="0.5rem" width="100%" zIndex={10}>
-        <DefaultNavbar
-          routes={routes}
-          transparent
-          light
-        />
-      </MKBox>
+<>
+  <MKBox position="fixed" top="0.5rem" width="100%" zIndex={10}>
+    <DefaultNavbar
+      routes={routes}
+      transparent
+      light
+    />
+  </MKBox>
 
-      <Header title={product?.nombre || "Producto"} />
-      <SoftBox mt={6} mb={3} sx={{ display: "flex", justifyContent: "center" }}>
-        <Grid container spacing={3}>
-          {/* Columna para la imagen del producto */}
-          <Grid item xs={12} md={4} xl={3}>
-            <SoftBox
-              sx={{
-                position: "relative",
-                borderRadius: "lg",
-                backgroundColor: "white",
-                boxShadow: ({ boxShadows: { navbarBoxShadow } }) => navbarBoxShadow,
-              }}
-            >
-              <img
-                src={product?.imagen || samsungImage}
-                alt={product?.nombre || "Producto"}
-                style={{ width: "100%", borderRadius: "10px" }}
-              />
-            </SoftBox>
-
-            {/* Nuevo Card para el precio */}
-            <Card
-              sx={{
-                mt: 0, // No margin top if the brand is Apple
-                p: 2,
-                textAlign: "center",
-                mx: "auto", // Center align the card horizontally
-                maxWidth: "100%", // Max width same as the image container
-              }}
-            >
-              {/* Product name */}
-              <SoftTypography variant="h5" fontWeight="medium" textTransform="capitalize">
-                {product?.nombre || "Nombre del Producto"}
-              </SoftTypography>
-
-              {/* Price */}
-              <SoftTypography variant="h5" fontWeight="bold" color="violet" sx={{ mt: 2 }}>
-                Precio: ${product?.precio} (USD)
-              </SoftTypography>
-            </Card>
-
-              {/* Nuevo Card para el precio Arg */}
-              <Card 
-                sx={{ 
-                  mt: 3, 
-                  p: 2,  
-                  textAlign: "center",
-                  mx: "auto", // Center align the card horizontally
-
-                  maxWidth: "100%", // Max width same as the image container
-
-                }}
-              >
-              {product?.precioArg && (
-                <SoftTypography variant="h6" fontWeight="bold" color="green" sx={{ mt: 1 }}>
-                  Precio en Argentina: ${new Intl.NumberFormat("es-AR").format(product?.precioArg)} (ARS)
-                </SoftTypography>
-              )}
-              
-            </Card>
-
-          </Grid>
-
-
-
-
-
-          {/* Columna para la información del producto */}
-          <Grid item xs={12} md={6} xl={4}>
-            <InfoComputadoras
-              title="Información Del Producto"
-              description={`Marca: ${product?.marca || "N/A"} - Modelo: ${product?.nombre || "N/A"}`}
-              info={filteredProductInfo}
+  <Header title={product?.nombre || "Producto"} />
+  <SoftBox mt={6} mb={3} px={7} sx={{ display: "flex", justifyContent: "center" }}>
+    <Grid container spacing={3}>
+      {/* Columna para la imagen del producto */}
+      <Grid item xs={12} md={6}>
+        <div>
+          <SoftBox
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              position: "relative",
+              borderRadius: "lg",
+              backgroundColor: "white",
+              boxShadow: ({ boxShadows: { navbarBoxShadow } }) => navbarBoxShadow,
+            }}
+          >
+            <img
+              src={Array.isArray(product?.imagenes) ? product?.imagenes[0] : samsungImage}
+              alt={product?.nombre || "Producto"}
+              style={{ width: "60%", borderRadius: "10px" }}
             />
-          </Grid>
+          </SoftBox>
+        </div>
 
-          {/* Columna para ProfilesList */}
-          <Grid item xs={12} xl={4}>
-            <ImpuestosPuertaAPuertaComputadoras title="Impuestos" productPrice={product?.precio} />
-          </Grid>
-        </Grid>
-      </SoftBox>
-    </>
+        <div style={{ marginBottom: "20px" }}>
+          <Card 
+            sx={{ 
+              mt: 3, 
+              p: 2,  
+              textAlign: "center",
+              maxWidth: "100%",
+            }}
+          >
+            <SoftTypography variant="h5" fontWeight="medium" textTransform="capitalize">
+              {product?.nombre || "Nombre del Producto"}
+            </SoftTypography>
+
+            <SoftTypography variant="h5" fontWeight="bold" color="violet" sx={{ mt: 2 }}>
+              PRECIO: ${product?.precio} (USD)
+            </SoftTypography>
+          </Card>
+        </div>
+
+        {product?.precioArg && (
+          <Card 
+            sx={{ 
+              mt: 3, 
+              p: 2,  
+              textAlign: "center",
+              maxWidth: "100%",
+            }}
+          >
+            <SoftTypography variant="h6" fontWeight="bold" color="green" sx={{ mt: 1 }}>
+              PRECIO EN ARGENTINA: ${new Intl.NumberFormat("es-AR").format(product?.precioArg)} (ARS)
+            </SoftTypography>
+          </Card>
+        )}
+
+        <InfoComputadoras
+          title="Información Del Producto"
+          description={`Marca: ${product?.marca || "N/A"} - Modelo: ${product?.nombre || "N/A"}`}
+          info={filteredProductInfo}
+        />
+      </Grid>
+
+      {/* Columna para los impuestos */}
+      <Grid item xs={12} md={6}>
+        <ImpuestosPuertaAPuertaComputadoras title="Compra producto" productPrice={product?.precio} />
+      </Grid>
+    </Grid>
+  </SoftBox>
+</>
   );
 }
 

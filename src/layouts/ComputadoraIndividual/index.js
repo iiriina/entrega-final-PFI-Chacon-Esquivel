@@ -88,7 +88,7 @@ function Overview() {
       </MKBox>
 
       <Header title={product?.nombre || "Producto"} />
-      <SoftBox mt={6} mb={3} px={3} sx={{ display: "flex", justifyContent: "center" }}>
+      <SoftBox mt={6} mb={3} px={7} sx={{ display: "flex", justifyContent: "center" }}>
         <Grid container spacing={3} >
           {/* Columna para la imagen del producto */}
           <Grid item xs={12} md={6}>
@@ -113,6 +113,7 @@ function Overview() {
             </SoftBox>
             </div>
             
+            <div style={{ marginBottom: "20px"}}>
             <Card 
               sx={{ 
                 mt: 3, 
@@ -129,6 +130,7 @@ function Overview() {
                 PRECIO: ${product?.precio} (USD)
               </SoftTypography>
             </Card>
+            </div>
 
             {product?.precioArg && (
               <Card 
