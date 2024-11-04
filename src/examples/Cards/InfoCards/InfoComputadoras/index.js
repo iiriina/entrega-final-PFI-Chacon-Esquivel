@@ -52,7 +52,7 @@ const renderItems = labels.map((label, key) => (
 
 
   return (
-    <Card sx={{ height: "100%" }}>
+    <Card sx={{ height: "auto" }}>
       <SoftBox display="flex" justifyContent="space-between" alignItems="center" pt={2} px={2}>
         <SoftTypography variant="h5" fontWeight="medium" textTransform="capitalize">
           {title}
