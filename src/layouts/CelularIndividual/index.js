@@ -125,6 +125,8 @@ function Overview() {
         </div>
 
         {product?.precioArg && (
+          <div style={{ marginBottom: "30px" }}>
+
           <Card 
             sx={{ 
               mt: 3, 
@@ -137,11 +139,12 @@ function Overview() {
               PRECIO EN ARGENTINA: ${new Intl.NumberFormat("es-AR").format(product?.precioArg)} (ARS)
             </SoftTypography>
           </Card>
+          </div>
+
         )}
 
         <InfoComputadoras
           title="Información Del Producto"
-          description={`Marca: ${product?.marca || "N/A"} - Modelo: ${product?.nombre || "N/A"}`}
           info={filteredProductInfo}
         />
       </Grid>
