@@ -12,58 +12,58 @@ import { getCelulares } from 'controllers/getCelulares';
 import routes from "routes";
 
 function Cellphones() {
-  const [searchQuery, setSearchQuery] = useState('');  // Estado para la búsqueda
-  const [products, setProducts] = useState([]);  // Estado para los productos (celulares)
-  const [loading, setLoading] = useState(false);  // Estado de carga
-  const [currentPage, setCurrentPage] = useState(1);  // Estado para la página actual
-  const [totalPages, setTotalPages] = useState(1);  // Estado para el total de páginas
-  const [filters, setFilters] = useState({});  // Estado para almacenar los filtros
+  const [searchQuery, setSearchQuery] = useState('');  
+  const [products, setProducts] = useState([]);  
+  const [loading, setLoading] = useState(false); 
+  const [currentPage, setCurrentPage] = useState(1); 
+  const [totalPages, setTotalPages] = useState(1);  
+  const [filters, setFilters] = useState({});  
 
   // Función para obtener los productos (celulares) con filtros y paginación
   const fetchProducts = async (filtros = {}) => {
     setLoading(true);
     try {
-      const resultados = await getCelulares({ ...filtros, page: currentPage, limit: 20 });  // Añadir paginación a la consulta
+      const resultados = await getCelulares({ ...filtros, page: currentPage, limit: 20 });  
 
       if (Array.isArray(resultados.data)) {
-        setProducts(resultados.data);  // Establecer los productos en el estado
-        setTotalPages(resultados.totalPages || 1);  // Establecer el total de páginas
+        setProducts(resultados.data);  
+        setTotalPages(resultados.totalPages || 1);  
       } else {
-        setProducts([]);  // Si no hay resultados, vaciar la lista de productos
+        setProducts([]);  // Si no hay resultados, vaciamos la lista de productos
       }
     } catch (error) {
       console.error("Error al buscar celulares:", error);
-      setProducts([]);  // Manejo de errores
+      setProducts([]);  
     } finally {
-      setLoading(false);  // Terminar el estado de carga
+      setLoading(false); 
     }
   };
 
-  // UseEffect para obtener productos cuando el componente se monta o cambia la página o los filtros
+  // obtener productos cuando el componente se carga o cambia la página o los filtros
   useEffect(() => {
     fetchProducts({ query: searchQuery, ...filters, page: currentPage });
   }, [currentPage, filters]);
   
-  // Función para manejar cambios en la búsqueda
+  // Fx manejar cambios en la búsqueda
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
   };
 
-  // Función para realizar la búsqueda
+  // Fx hacer la búsqueda
   const handleSearchSubmit = () => {
-    setCurrentPage(1);  // Reiniciar la página a 1 antes de realizar la búsqueda
+    setCurrentPage(1);  // Reinicia a página 1
     setFilters((prevFilters) => ({ ...prevFilters, query: searchQuery }));
   };
 
-  // Función para aplicar filtros desde la barra lateral
+  // Función aplicar filtros
   const handleApplyFilters = (newFilters) => {
     setFilters(newFilters);
-    setCurrentPage(1); // Reiniciar la página al aplicar filtros
+    setCurrentPage(1); 
   };
 
-  // Función para manejar el cambio de página
+  // Maneja el cambio de página
   const handlePageChange = (event, value) => {
-    setCurrentPage(value); // Cambiar la página actual
+    setCurrentPage(value); 
   };
 
   return (
@@ -106,7 +106,7 @@ function Cellphones() {
                         image={product.imagen}
                         title={product.nombre}
                         description={`${product.precio}`} 
-                        product={product} // Pasa el producto completo
+                        product={product} 
                         action={{
                           type: "internal",
                           route: `/producto/${product._id}`,
@@ -119,7 +119,7 @@ function Cellphones() {
                 )}
               </Grid>
 
-              {/* Paginador */}
+              {/* Paginas */}
               <Grid container justifyContent="center" mt={3}>
                 <Pagination
                   count={totalPages}

@@ -8,11 +8,9 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
-// Material Kit 2 React themes
 import theme from "assets/theme";
 import Presentation from "layouts/pages/presentation";
 
-// Material Kit 2 React routes
 import routes from "routes";
 import ProductDetail from "layouts/CelularIndividual";
 import ProductDetail2 from "layouts/ComputadoraIndividual";
@@ -29,7 +27,6 @@ import './styles.css';
 export default function App() {
   const { pathname } = useLocation();
 
-  // Setting page scroll to 0 when changing the route
   useEffect(() => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;

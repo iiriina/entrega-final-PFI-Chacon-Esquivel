@@ -7,8 +7,8 @@
     padding: 0 15px;
     height: 44px;
     border-radius: 22px;
-    background-color: rgba(255, 255, 255, 0.9); /* Translucent white background */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    background-color: rgba(255, 255, 255, 0.9); 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
     position: relative;
   }
   
@@ -21,7 +21,7 @@
   
   .search-icon {
     margin-left: 10px;
-    color: #5f6368; /* Set the color to gray */
+    color: #5f6368; 
 
   }
   

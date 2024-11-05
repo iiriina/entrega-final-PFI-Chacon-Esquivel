@@ -36,7 +36,6 @@ export const selectIsLoggedIn = state => state.auth.isLoggedIn;
 const store = configureStore({
   reducer: {
     auth: authSlice.reducer,
-    // Agrega otros reducers si es necesario
   },
 });
 

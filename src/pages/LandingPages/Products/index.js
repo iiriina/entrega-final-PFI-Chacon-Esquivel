@@ -3,39 +3,39 @@ import MKBox from "components/MKBox";
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import CenteredBlogCard from 'examples/Cards/BlogCards/CardCompus'; // Tarjeta para computadoras
+import CenteredBlogCard from 'examples/Cards/BlogCards/CardCompus'; 
 import { FaSearch } from 'react-icons/fa';
-import Pagination from "@mui/material/Pagination"; // Importar el componente de paginación
+import Pagination from "@mui/material/Pagination"; 
 import './index.css';
 import Sidebar from 'components/SideBar';
-import { getComputadoras } from 'controllers/getComputadoras';  // Función para obtener las computadoras
+import { getComputadoras } from 'controllers/getComputadoras';  
 import routes from "routes";
 
 function Products() {
-  const [searchQuery, setSearchQuery] = useState('');  // Estado para la búsqueda
-  const [products, setProducts] = useState([]);  // Estado para los productos (computadoras)
-  const [loading, setLoading] = useState(false);  // Estado de carga
-  const [currentPage, setCurrentPage] = useState(1);  // Estado para la página actual
-  const [totalPages, setTotalPages] = useState(1);  // Estado para el total de páginas
-  const [filters, setFilters] = useState({}); // Estado para los filtros aplicados
+  const [searchQuery, setSearchQuery] = useState(''); 
+  const [products, setProducts] = useState([]);  
+  const [loading, setLoading] = useState(false); 
+  const [currentPage, setCurrentPage] = useState(1);  
+  const [totalPages, setTotalPages] = useState(1); 
+  const [filters, setFilters] = useState({}); 
 
   // Función para obtener los productos (computadoras)
   const fetchProducts = async (filtros = {}) => {
     setLoading(true);
     try {
-      const resultados = await getComputadoras({ ...filtros, page: currentPage, limit: 20 });  // Añadir paginación a la consulta
+      const resultados = await getComputadoras({ ...filtros, page: currentPage, limit: 20 }); 
 
       if (Array.isArray(resultados.data)) {
-        setProducts(resultados.data);  // Establecer los productos en el estado
-        setTotalPages(resultados.totalPages || 1);  // Establecer el total de páginas
+        setProducts(resultados.data);  
+        setTotalPages(resultados.totalPages || 1); 
       } else {
-        setProducts([]);  // Si no hay resultados, vaciar la lista de productos
+        setProducts([]);  
       }
     } catch (error) {
       console.error("Error al buscar computadoras:", error);
-      setProducts([]);  // Manejo de errores
+      setProducts([]); 
     } finally {
-      setLoading(false);  // Terminar el estado de carga
+      setLoading(false); 
     }
   };
 
@@ -44,41 +44,41 @@ function Products() {
     fetchProducts({ query: searchQuery, page: currentPage });
   }, [currentPage]);
 
-  // Función para manejar cambios en la búsqueda
+  // para manejar cambios en la búsqueda
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
   };
 
-  // Función para realizar la búsqueda
+  // para realizar la búsqueda
   const handleSearchSubmit = () => {
-    setCurrentPage(1);  // Reiniciar la página a 1 antes de realizar la búsqueda
-    fetchProducts({ query: searchQuery, page: 1, ...filters });  // Establecer la página en 1 cuando se realiza la búsqueda
+    setCurrentPage(1);  // Reiniciar la página a 1
+    fetchProducts({ query: searchQuery, page: 1, ...filters });  // Establecer la página en 1 
   };
 
-  // Función para aplicar filtros desde la barra lateral
+  // para aplicar filtros desde la barra lateral
   const handleApplyFilters = (filters) => {
     const transformedFilters = {
-      query: searchQuery || '',  // Añadir la query si existe
+      query: searchQuery || '', 
       min_price: filters.min_price || undefined,
       max_price: filters.max_price || undefined,
-      almacenamiento: filters.almacenamiento || undefined,  // Añadir almacenamiento
-      RAM: filters.RAM || undefined  // Añadir RAM
+      almacenamiento: filters.almacenamiento || undefined,  
+      RAM: filters.RAM || undefined  
     };
 
     const cleanedFilters = Object.fromEntries(
       Object.entries(transformedFilters).filter(([, value]) => value !== undefined)
     );
 
-    console.log("Filtros aplicados:", cleanedFilters); // Verificar los filtros aplicados en la consola
+    console.log("Filtros aplicados:", cleanedFilters); 
 
-    setFilters(cleanedFilters); // Guardar los filtros en el estado
-    setCurrentPage(1); // Reiniciar la página al aplicar filtros
+    setFilters(cleanedFilters); 
+    setCurrentPage(1); 
     fetchProducts(cleanedFilters);
   };
 
-  // Función para manejar el cambio de página
+  // manejar el cambio de página
   const handlePageChange = (event, value) => {
-    setCurrentPage(value); // Cambiar la página actual
+    setCurrentPage(value); 
   };
 
   return (
@@ -130,16 +130,16 @@ function Products() {
                             color: "info",
                             label: "Ver Más",
                           }}
-                          product={product} // Pasar el producto completo
+                          product={product} 
                         />
                       ) : (
-                        <p>Producto no disponible</p>  // Mostrar un mensaje alternativo si el producto no está disponible
+                        <p>Producto no disponible</p>  
                       )}
                     </Grid>
                   ))
                 )}
               </Grid>
-              {/* Paginador */}
+              {/* Paginas */}
               <Grid container justifyContent="center" mt={3}>
                 <Pagination
                   count={totalPages}
