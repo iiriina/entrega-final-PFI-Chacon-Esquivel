@@ -1,6 +1,5 @@
 import { forwardRef } from "react";
 
-// prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
 
 // Custom styles for SoftButton
@@ -21,7 +20,6 @@ const SoftButton = forwardRef(
   )
 );
 
-// Setting default values for the props of SoftButton
 SoftButton.defaultProps = {
   size: "medium",
   variant: "contained",
@@ -30,7 +28,6 @@ SoftButton.defaultProps = {
   iconOnly: false,
 };
 
-// Typechecking props for the SoftButton
 SoftButton.propTypes = {
   size: PropTypes.oneOf(["small", "medium", "large"]),
   variant: PropTypes.oneOf(["text", "contained", "outlined", "gradient"]),
