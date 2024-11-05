@@ -1,7 +1,7 @@
 import urlWebServices from "./webServices";
 
 export const getPuertaAPuerta = async () => {
-  let url = urlWebServices.getPuertaAPuerta;  // Asegúrate de que esta URL apunte a tu servicio de puerta a puerta
+  let url = urlWebServices.getPuertaAPuerta;  
 
   try {
     let response = await fetch(url, {

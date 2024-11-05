@@ -4,7 +4,6 @@ export const login = async function (login) {
   // URL de los servicios web
   let url = urlWebServices.login;
   
-  // Crear un objeto URLSearchParams para los datos del formulario
   const formData = new URLSearchParams();
   formData.append('email', login.email);
   formData.append('contrasenia', login.password);
@@ -18,7 +17,6 @@ export const login = async function (login) {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
       body: formData,
-      // credentials: 'include' // Considera activar esto si manejas autenticación con cookies
     });
 
     let rdo = response.status;
@@ -56,7 +54,6 @@ export const login = async function (login) {
     }
   } catch (error) {
     console.error('Error en la solicitud de inicio de sesión:', error);
-    // Puedes lanzar una excepción o devolver un objeto de error
     return { rdo: 1, mensaje: "Ha ocurrido un error" };
   }
 };

@@ -6,7 +6,7 @@ export const getEnvioEspecifico = async (envio, pesoKG) => {
   console.log("Se lo estoy pasando al back desde el front como:");
   console.log(pesoKGFormatted);
   
-  // Construir la URL con los parámetros de consulta sin incluir `tipo`
+ 
   let url = `${urlWebServices.getEnvio}?envio=${encodeURIComponent(envio)}&pesoKG=${encodeURIComponent(pesoKGFormatted)}`;
 
   try {

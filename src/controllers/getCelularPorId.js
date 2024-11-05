@@ -1,7 +1,7 @@
 import urlWebServices from "./webServices";
 
 export const getCelularById = async (id) => {
-  let url = `${urlWebServices.getCelularById}?id_celular=${id}`;  // Construye la URL con el ID del celular
+  let url = `${urlWebServices.getCelularById}?id_celular=${id}`;  
 
   try {
     let response = await fetch(url, {

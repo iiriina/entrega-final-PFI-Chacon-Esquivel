@@ -1,6 +1,3 @@
-// react-routers components
-
-// prop-types is library for typechecking of props
 import PropTypes from "prop-types";
 
 // @mui material components
@@ -13,9 +10,8 @@ function InfoComputadoras({ title, description, info }) {
   const labels = [];
   const values = [];
 
-  // Convertir las claves del objeto en un formato legible (excluyendo "Descripción")
   Object.keys(info).forEach((el) => {
-    if (el !== "Descripción") {  // Excluir "Descripción" de las etiquetas
+    if (el !== "Descripción") {  
       if (el.match(/[A-Z\s]+/)) {
         const uppercaseLetter = Array.from(el).find((i) => i.match(/[A-Z]+/));
         const newElement = el.replace(uppercaseLetter, ` ${uppercaseLetter.toLowerCase()}`);
@@ -28,7 +24,7 @@ function InfoComputadoras({ title, description, info }) {
 
   // Agregar los valores correspondientes a cada clave (excluyendo "Descripción")
   Object.values(info).forEach((el, index) => {
-    if (Object.keys(info)[index] !== "Descripción") {  // Excluir "Descripción" de los valores
+    if (Object.keys(info)[index] !== "Descripción") {  
       values.push(el);
     }
   });
@@ -43,7 +39,7 @@ const renderItems = labels.map((label, key) => (
       variant="button" 
       fontWeight="regular" 
       color="text"
-      sx={{ display: "block", marginLeft: "10px", fontSize: "0.95rem"  }} // Asegura que cada línea larga quede debajo
+      sx={{ display: "block", marginLeft: "10px", fontSize: "0.95rem"  }} 
     >
       {values[key]}
     </SoftTypography>
@@ -59,7 +55,7 @@ const renderItems = labels.map((label, key) => (
         </SoftTypography>
       </SoftBox>
       <SoftBox p={2}>
-        {/* Mostrar la descripción directamente, asegurándonos de que sea un string */}
+        {/* Mostrar la descripción directamente */}
         <SoftBox mb={1} lineHeight={1} >
           <SoftTypography variant="button" color="text" fontWeight="regular" sx={{ fontSize: "0.95rem" }}>
             {Array.isArray(description) ? description.join(" ") : description}

@@ -1,8 +1,7 @@
-import urlWebServices from "./webServices";  // Asegúrate de que tienes una URL válida en `webServices.js`
+import urlWebServices from "./webServices";  
 
-// Función para obtener una computadora por su ID
 export const getComputerById = async (id) => {
-  let url = `${urlWebServices.getComputerById}?id_computer=${id}`;  // Construye la URL con el ID de la computadora
+  let url = `${urlWebServices.getComputerById}?id_computer=${id}`;  
   console.log("La uRL es: ", url)
   console.log("HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
   try {
@@ -16,12 +15,12 @@ export const getComputerById = async (id) => {
     });
 
     let rdo = response.status;
-    let data = await response.json();  // Parsear la respuesta a JSON
+    let data = await response.json();  
     console.log("Datos recibidos del backend:", data);
 
     switch (rdo) {
       case 200:
-        return data;  // Retorna los datos si la respuesta es exitosa
+        return data;  
 
       case 400:
         return { rdo: 1, mensaje: "Error al obtener la computadora por ID." };

@@ -1,7 +1,7 @@
 import urlWebServices from "./webServices";
 
 export const getCellphonesComtrade = async () => {
-  let url = urlWebServices.getCelularesComtrade;  // Asegúrate de que esta URL apunte a tu servicio de cellphones-comtrade
+  let url = urlWebServices.getCelularesComtrade; 
 
   try {
     let response = await fetch(url, {

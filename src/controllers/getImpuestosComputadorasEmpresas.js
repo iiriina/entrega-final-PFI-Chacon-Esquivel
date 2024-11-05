@@ -1,7 +1,7 @@
 import urlWebServices from "./webServices";
 
 export const getEmpresasComputadoras = async () => {
-  let url = urlWebServices.getEmpresasComputadoras;  // Asegúrate de que esta URL apunte a tu servicio de empresas de computadoras
+  let url = urlWebServices.getEmpresasComputadoras;  
 
   try {
     let response = await fetch(url, {

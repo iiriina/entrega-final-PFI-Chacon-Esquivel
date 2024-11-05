@@ -1,7 +1,7 @@
 import urlWebServices from "./webServices";
 
 export const getDolar = async () => {
-  let url = urlWebServices.getDolar;  // Asegúrate de que esta URL apunte a tu servicio del dólar
+  let url = urlWebServices.getDolar;  
 
   try {
     let response = await fetch(url, {
