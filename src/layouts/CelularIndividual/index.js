@@ -10,7 +10,7 @@ import Header from "layouts/ComputadoraIndividual/componentes/Header2";
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import MKBox from "components/MKBox";
 import Card from "@mui/material/Card";
-import routes from "routes";
+import routes from "routes"; 
 import samsungImage from "assets/images/268868_u7nsk3.png"; // Imagen por defecto para el celular
 import './index.css';
 
@@ -129,13 +129,14 @@ function Overview() {
 
           <Card 
             sx={{ 
-              mt: 3, 
+              mt: 3,
+              mb: 3, 
               p: 2,  
               textAlign: "center",
               maxWidth: "100%",
             }}
           >
-            <SoftTypography variant="h6" fontWeight="bold" color="green" sx={{ mt: 1 }}>
+            <SoftTypography variant="h6" fontWeight="bold" color="green" sx={{ mt: 1}}>
               PRECIO EN ARGENTINA: ${new Intl.NumberFormat("es-AR").format(product?.precioArg)} (ARS)
             </SoftTypography>
           </Card>
@@ -147,12 +148,19 @@ function Overview() {
           title="Información Del Producto"
           info={filteredProductInfo}
         />
+
+        
       </Grid>
 
       {/* Columna para los impuestos */}
       <Grid item xs={12} md={6}>
-        <ImpuestosPuertaAPuertaComputadoras title="Compra producto" productPrice={product?.precio} />
+        <ImpuestosPuertaAPuertaComputadoras 
+          title="Compra producto" 
+          productPrice={typeof product?.precio === "number" ? product.precio : 0} 
+          productPriceARG={typeof product?.precioArg === "number" ? product.precioArg : 0} 
+        />
       </Grid>
+
     </Grid>
   </SoftBox>
 </>

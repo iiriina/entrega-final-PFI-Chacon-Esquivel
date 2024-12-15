@@ -18,7 +18,7 @@ import { getPuertaAPuerta } from "controllers/getImpuestosPuertaApuerta";
 import { getEnvioEspecifico } from "controllers/getEnvio";
 import { getEmpresasCelulares } from "controllers/getImpuestosCelularesEmpresas"; // Asegúrate de que exista este controlador
 
-function impuestosPuertaAPuertaCelulares({ title, productPrice }) {
+function impuestosPuertaAPuertaCelulares({ title, productPrice, productPriceARG }) {
   const [shippingCost, setShippingCost] = useState(0);
   const [dolarOficial, setDolarOficial] = useState(0);
   const [quantity, setQuantity] = useState(1);
@@ -387,20 +387,109 @@ if (tributosData) {
         </TableRow>
       </TableBody>
       <tfoot>
-        <TableRow>
-          <TableCell colSpan={3} align="right" style={{ fontWeight: "bold" }}>
-            Total c/ Imp. Ganancias en ARS:
-          </TableCell>
-          <TableCell align="center" style={{ fontWeight: "bold" }}>
+
+
+
+      <TableRow
+        style={{
+          backgroundColor: productPriceARG !== null &&
+            productPriceARG !== 0 &&
+            productPriceARG !== undefined &&
+            impuestoGanancias +
+              ((productPrice * quantity +
+                shippingCost +
+                impuestoPAIS +
+                derechosImportacion) *
+                dolarOficial +
+                tasaCorreo) *
+                (1 + puertaAPuertaData.IVA / 100) <
+              productPriceARG * quantity
+            ? "#d4f8d4" // Verde claro
+            : "inherit",
+        }}
+      >
+        <TableCell colSpan={3} align="right" style={{ fontWeight: "bold" }}>
+          Total c/ Imp. Ganancias en ARS:
+        </TableCell>
+        <TableCell
+          align="left"
+          style={{
+            fontWeight: "bold",
+            backgroundColor: productPriceARG !== null &&
+              productPriceARG !== 0 &&
+              productPriceARG !== undefined &&
+              impuestoGanancias +
+                ((productPrice * quantity +
+                  shippingCost +
+                  impuestoPAIS +
+                  derechosImportacion) *
+                  dolarOficial +
+                  tasaCorreo) *
+                  (1 + puertaAPuertaData.IVA / 100) <
+                productPriceARG * quantity
+              ? "#d4f8d4" // Verde claro
+              : "inherit",
+          }}
+        >
           ${(
+            impuestoGanancias +
+            ((productPrice * quantity +
+              shippingCost +
+              impuestoPAIS +
+              derechosImportacion) *
+              dolarOficial +
+              tasaCorreo) *
+              (1 + puertaAPuertaData.IVA / 100)
+          ).toFixed(2)}
+        </TableCell>
+      </TableRow>
+
+      {productPriceARG !== null && productPriceARG !== 0 && productPriceARG !== undefined && (
+        <TableRow
+          style={{
+            backgroundColor:
+              impuestoGanancias +
+                ((productPrice * quantity +
+                  shippingCost +
+                  impuestoPAIS +
+                  derechosImportacion) *
+                  dolarOficial +
+                  tasaCorreo) *
+                  (1 + puertaAPuertaData.IVA / 100) >=
+              productPriceARG * quantity
+                ? "#d4f8d4" // Verde claro si este es menor
+                : "inherit",
+          }}
+        >
+          <TableCell colSpan={3} align="right" style={{ fontWeight: "bold" }}>
+            Total de compra en el mercado nacional (ARS):
+          </TableCell>
+          <TableCell
+            align="center"
+            style={{
+              fontWeight: "bold",
+              backgroundColor:
                 impuestoGanancias +
-                ((productPrice * quantity + shippingCost + impuestoPAIS + derechosImportacion) * dolarOficial + tasaCorreo) *
-                (1 + puertaAPuertaData.IVA / 100)
-              ).toFixed(2)}
+                  ((productPrice * quantity +
+                    shippingCost +
+                    impuestoPAIS +
+                    derechosImportacion) *
+                    dolarOficial +
+                    tasaCorreo) *
+                    (1 + puertaAPuertaData.IVA / 100) >=
+                productPriceARG * quantity
+                  ? "#d4f8d4" // Verde claro
+                  : "inherit",
+            }}
+          >
+            ${(productPriceARG.toFixed(2) * quantity).toFixed(2)}
           </TableCell>
         </TableRow>
-        <TableRow>
-        </TableRow>
+      )}
+
+
+
+
 
       </tfoot>
     </Table>
@@ -648,10 +737,59 @@ if (tributosData) {
             <TableCell align="left">${(CIFCelularesARS + TECelulares + DIECelulares + IVACelulares + IIBBCelulares + gananciasCelulares + impuestosInternosCelulares + impuestoPAISCelulares).toFixed(2)}</TableCell>
           </TableRow>
 
-          <TableRow>
-            <TableCell colSpan={3} align="right" style={{ fontWeight: "bold" }}>Total Importación (ARS):</TableCell>
-            <TableCell align="left" style={{ fontWeight: "bold" }}>${totalCelulares.toFixed(2)}</TableCell>
+          <TableRow
+            style={{
+              backgroundColor: productPriceARG !== null &&
+                productPriceARG !== 0 &&
+                productPriceARG !== undefined &&
+                totalCelulares < productPriceARG * quantity
+                ? "#d4f8d4" // Verde claro
+                : "inherit",
+            }}
+          >
+            <TableCell colSpan={3} align="right" style={{ fontWeight: "bold" }}>
+              Total Importación (ARS):
+            </TableCell>
+            <TableCell
+              align="left"
+              style={{
+                fontWeight: "bold",
+                backgroundColor: productPriceARG !== null &&
+                  productPriceARG !== 0 &&
+                  productPriceARG !== undefined &&
+                  totalCelulares < productPriceARG * quantity
+                  ? "#d4f8d4" // Verde claro
+                  : "inherit",
+              }}
+            >
+              ${totalCelulares.toFixed(2)}
+            </TableCell>
           </TableRow>
+
+          {productPriceARG !== null && productPriceARG !== 0 && productPriceARG !== undefined && (
+            <TableRow
+              style={{
+                backgroundColor:
+                  totalCelulares >= productPriceARG * quantity ? "#d4f8d4" : "inherit", // Verde claro si este es menor
+              }}
+            >
+              <TableCell colSpan={3} align="right" style={{ fontWeight: "bold" }}>
+                Total de compra en el mercado nacional (ARS):
+              </TableCell>
+              <TableCell
+                align="left"
+                style={{
+                  fontWeight: "bold",
+                  backgroundColor:
+                    totalCelulares >= productPriceARG * quantity ? "#d4f8d4" : "inherit",
+                }}
+              >
+                ${(productPriceARG.toFixed(2) * quantity).toFixed(2)}
+              </TableCell>
+            </TableRow>
+          )}
+
+
         </TableBody>
       </Table>
     </TableContainer>
@@ -672,8 +810,13 @@ if (tributosData) {
 }
 
 impuestosPuertaAPuertaCelulares.propTypes = {
-  title: PropTypes.string.isRequired,
-  productPrice: PropTypes.number.isRequired
+  title: PropTypes.string.isRequired, // Obligatorio
+  productPrice: PropTypes.number.isRequired, // Obligatorio
+  productPriceARG: PropTypes.oneOfType([
+    PropTypes.number, // Puede ser un número
+    PropTypes.oneOf([null]), // O puede ser null
+  ]), // Opcional
 };
+
 
 export default impuestosPuertaAPuertaCelulares;

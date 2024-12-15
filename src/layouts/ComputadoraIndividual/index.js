@@ -127,7 +127,7 @@ function Overview() {
               </SoftTypography>
 
               <SoftTypography variant="h5" fontWeight="bold" color="violet" sx={{ mt: 2 }}>
-                PRECIO: ${product?.precio} (USD)
+              PRECIO: ${product?.precio} (USD)
               </SoftTypography>
             </Card>
             </div>
@@ -135,7 +135,8 @@ function Overview() {
             {product?.precioArg && (
               <Card 
                 sx={{ 
-                  mt: 3, 
+                  mt: 3,
+                  mb: 3, 
                   p: 2,  
                   textAlign: "center",
                   maxWidth: "100%",
@@ -156,7 +157,13 @@ function Overview() {
 
           {/* Columna para los impuestos */}
           <Grid item xs={12} md={6}>
-            <ImpuestosPuertaAPuertaComputadoras title="Compra producto" productPrice={product?.precio} />
+          <ImpuestosPuertaAPuertaComputadoras 
+            title="Compra producto" 
+            productPrice={typeof product?.precio === "number" ? product.precio : 0} 
+            productPriceARG={typeof product?.precioArg === "number" ? product.precioArg : 0} 
+          />
+
+
           </Grid>
         </Grid>
       </SoftBox>

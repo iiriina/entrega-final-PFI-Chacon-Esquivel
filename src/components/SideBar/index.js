@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import MKTypography from "components/MKTypography";
 import TextField from "@mui/material/TextField";
@@ -7,11 +7,18 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import PropTypes from 'prop-types';
 
-function Sidebar({ onApplyFilters }) {
-  const [minPrice, setMinPrice] = useState(null);
-  const [maxPrice, setMaxPrice] = useState(null);
-  const [almacenamiento, setAlmacenamiento] = useState('');
-  const [RAM, setRAM] = useState('');
+function Sidebar({ onApplyFilters, currentFilters }) {
+  const [minPrice, setMinPrice] = useState(currentFilters.min_price || '');
+  const [maxPrice, setMaxPrice] = useState(currentFilters.max_price || '');
+  const [almacenamiento, setAlmacenamiento] = useState(currentFilters.almacenamiento || '');
+  const [RAM, setRAM] = useState(currentFilters.RAM || '');
+
+  useEffect(() => {
+    setMinPrice(currentFilters.min_price || '');
+    setMaxPrice(currentFilters.max_price || '');
+    setAlmacenamiento(currentFilters.almacenamiento || '');
+    setRAM(currentFilters.RAM || '');
+  }, [currentFilters]);
 
   const handleApplyFilters = () => {
     const filters = {
@@ -77,7 +84,7 @@ function Sidebar({ onApplyFilters }) {
                 checked={almacenamiento === option}
                 onChange={() => handleAlmacenamientoChange(option)}
               />
-            }
+            } 
             label={option}
           />
         ))}
@@ -110,9 +117,16 @@ function Sidebar({ onApplyFilters }) {
   );
 }
 
-// Validación de PropTypes para onApplyFilters
+
+
+// Validación de PropTypes para onApplyFilters y currentFilters
 Sidebar.propTypes = {
   onApplyFilters: PropTypes.func.isRequired,
+  currentFilters: PropTypes.shape({
+    min_price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    max_price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    almacenamiento: PropTypes.string,
+    RAM: PropTypes.string,
+  }),
 };
-
 export default Sidebar;

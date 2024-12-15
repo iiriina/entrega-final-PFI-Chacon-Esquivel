@@ -18,7 +18,7 @@ import { getPuertaAPuerta } from "controllers/getImpuestosPuertaApuerta";
 import { getEnvioEspecifico } from "controllers/getEnvio";
 import { getEmpresasComputadoras } from "controllers/getImpuestosComputadorasEmpresas"; // Asegúrate de que exista este controlador
 
-function impuestosPuertaAPuertaComputadoras({ title, productPrice }) {
+function impuestosPuertaAPuertaComputadoras({ title, productPrice, productPriceARG }) {
   const [shippingCost, setShippingCost] = useState(0);
   const [dolarOficial, setDolarOficial] = useState(0);
   const [quantity, setQuantity] = useState(1);
@@ -353,7 +353,7 @@ if (tributosData) {
         <TableCell colSpan={3} align="right" style={{ fontWeight: "bold", color: "gray" }}>
             Total s/ Imp. Ganancias en ARS:
           </TableCell>
-          <TableCell align="center" style={{ fontWeight: "bold", color: "gray" }}>
+          <TableCell align="left" style={{ fontWeight: "bold", color: "gray" }}>
           ${(
 
                 ((productPrice * quantity + shippingCost + impuestoPAIS + derechosImportacion) * dolarOficial + tasaCorreo) *
@@ -374,20 +374,83 @@ if (tributosData) {
         </TableRow>
       </TableBody>
       <tfoot>
-        <TableRow>
-          <TableCell colSpan={3} align="right" style={{ fontWeight: "bold" }}>
-            Total c/ Imp. Ganancias en ARS:
-          </TableCell>
-          <TableCell align="center" style={{ fontWeight: "bold" }}>
-          ${(
-                impuestoGanancias +
+
+
+
+        
+      <TableRow
+        style={{
+          backgroundColor:
+            productPriceARG && productPriceARG !== 0 && productPriceARG !== undefined &&
+            impuestoGanancias +
+              ((productPrice * quantity + shippingCost + impuestoPAIS + derechosImportacion) * dolarOficial + tasaCorreo) *
+              (1 + puertaAPuertaData.IVA / 100) <
+              productPriceARG * quantity
+              ? "#d4f8d4"
+              : "inherit",
+        }}
+      >
+        <TableCell colSpan={3} align="right" style={{ fontWeight: "bold" }}>
+          Total c/ Imp. Ganancias en ARS:
+        </TableCell>
+        <TableCell
+          align="left"
+          style={{
+            fontWeight: "bold",
+            backgroundColor:
+              productPriceARG && productPriceARG !== 0 && productPriceARG !== undefined &&
+              impuestoGanancias +
                 ((productPrice * quantity + shippingCost + impuestoPAIS + derechosImportacion) * dolarOficial + tasaCorreo) *
-                (1 + puertaAPuertaData.IVA / 100)
-              ).toFixed(2)}
+                (1 + puertaAPuertaData.IVA / 100) <
+                productPriceARG * quantity
+                ? "#d4f8d4"
+                : "inherit",
+          }}
+        >
+          ${(
+            impuestoGanancias +
+            ((productPrice * quantity + shippingCost + impuestoPAIS + derechosImportacion) * dolarOficial + tasaCorreo) *
+            (1 + puertaAPuertaData.IVA / 100)
+          ).toFixed(2)}
+        </TableCell>
+      </TableRow>
+
+      {productPriceARG !== null && productPriceARG !== 0 && productPriceARG !== undefined && (
+        <TableRow
+          style={{
+            backgroundColor:
+              impuestoGanancias +
+                ((productPrice * quantity + shippingCost + impuestoPAIS + derechosImportacion) * dolarOficial + tasaCorreo) *
+                (1 + puertaAPuertaData.IVA / 100) >=
+              productPriceARG * quantity
+                ? "#d4f8d4"
+                : "inherit",
+          }}
+        >
+          <TableCell colSpan={3} align="right" style={{ fontWeight: "bold" }}>
+            Total de compra en el mercado nacional (ARS):
+          </TableCell>
+          <TableCell
+            align="left"
+            style={{
+              fontWeight: "bold",
+              backgroundColor:
+                impuestoGanancias +
+                  ((productPrice * quantity + shippingCost + impuestoPAIS + derechosImportacion) * dolarOficial + tasaCorreo) *
+                  (1 + puertaAPuertaData.IVA / 100) >=
+                productPriceARG * quantity
+                  ? "#d4f8d4"
+                  : "inherit",
+            }}
+          >
+            ${(productPriceARG.toFixed(2) * quantity)}
           </TableCell>
         </TableRow>
-        <TableRow>
-        </TableRow>
+      )}
+
+
+
+
 
       </tfoot>
     </Table>
@@ -634,10 +697,55 @@ if (tributosData) {
             <TableCell align="left">${(CIFComputadorasARS + TEComputadoras + DIEComputadoras + IVAComputadoras + IVAADComputadoras + IIBBComputadoras + gananciasComputadoras + impuestoPAISComputadoras).toFixed(2)}</TableCell>
           </TableRow>
 
-          <TableRow>
-            <TableCell colSpan={3} align="right" style={{ fontWeight: "bold" }}>Total Importación (ARS):</TableCell>
-            <TableCell align="left" style={{ fontWeight: "bold" }}>${totalComputadoras.toFixed(2)}</TableCell>
+          <TableRow
+            style={{
+              backgroundColor:
+                productPriceARG && productPriceARG !== 0 && totalComputadoras < productPriceARG * quantity
+                  ? "#d4f8d4"
+                  : "inherit",
+            }}
+          >
+            <TableCell colSpan={3} align="right" style={{ fontWeight: "bold" }}>
+              Total Importación (ARS):
+            </TableCell>
+            <TableCell
+              align="left"
+              style={{
+                fontWeight: "bold",
+                backgroundColor:
+                  productPriceARG && productPriceARG !== 0 && totalComputadoras < productPriceARG * quantity
+                    ? "#d4f8d4"
+                    : "inherit",
+              }}
+            >
+              ${totalComputadoras.toFixed(2)}
+            </TableCell>
           </TableRow>
+
+      {productPriceARG !== null && productPriceARG !== 0 && productPriceARG !== undefined && (
+        <TableRow
+          style={{
+            backgroundColor: totalComputadoras >= productPriceARG * quantity ? "#d4f8d4" : "inherit",
+          }}
+        >
+          <TableCell colSpan={3} align="right" style={{ fontWeight: "bold" }}>
+            Total de compra en el mercado nacional (ARS):
+          </TableCell>
+          <TableCell
+            align="left"
+            style={{
+              fontWeight: "bold",
+              backgroundColor: totalComputadoras >= productPriceARG * quantity ? "#d4f8d4" : "inherit",
+            }}
+          >
+            ${(productPriceARG.toFixed(2) * quantity)}
+          </TableCell>
+        </TableRow>
+      )}
+
+
+
+
         </TableBody>
       </Table>
     </TableContainer>
@@ -659,8 +767,12 @@ if (tributosData) {
 
 
 impuestosPuertaAPuertaComputadoras.propTypes = {
-  title: PropTypes.string.isRequired,
-  productPrice: PropTypes.number.isRequired
+  title: PropTypes.string.isRequired, // Obligatorio
+  productPrice: PropTypes.number.isRequired, // Obligatorio
+  productPriceARG: PropTypes.oneOfType([
+    PropTypes.number, // Puede ser un número
+    PropTypes.oneOf([null]), // O puede ser null
+  ]), // Opcional
 };
 
 export default impuestosPuertaAPuertaComputadoras;

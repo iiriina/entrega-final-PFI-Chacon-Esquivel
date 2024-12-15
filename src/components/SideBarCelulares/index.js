@@ -12,13 +12,13 @@ function SideBarCelulares({ onApplyFilters, currentFilters }) {
   const [minPrice, setMinPrice] = useState(currentFilters.min_price || '');
   const [maxPrice, setMaxPrice] = useState(currentFilters.max_price || '');
   const [almacenamiento, setAlmacenamiento] = useState(currentFilters.almacenamiento || '');
-  const [cantidadCamaras, setCantidadCamaras] = useState(currentFilters.cantidadCamaras || 1);
+  const [cantidadCamaras, setCantidadCamaras] = useState(currentFilters.cantidadCamaras || '');
 
   useEffect(() => {
     setMinPrice(currentFilters.min_price || '');
     setMaxPrice(currentFilters.max_price || '');
     setAlmacenamiento(currentFilters.almacenamiento || '');
-    setCantidadCamaras(currentFilters.cantidadCamaras || 1);
+    setCantidadCamaras(currentFilters.cantidadCamaras || '');
   }, [currentFilters]);
 
   const handleApplyFilters = () => {
@@ -89,26 +89,58 @@ function SideBarCelulares({ onApplyFilters, currentFilters }) {
       <MKTypography variant="body2" mt={3} mb={1}>
         Cantidad de Cámaras
       </MKTypography>
-      <div style={{ padding: '0 5px' }}>
-        <Slider
-          value={cantidadCamaras}
-          onChange={(e, value) => setCantidadCamaras(value)}
-          step={1}
-          marks={[
-            { value: 1, label: <MKTypography variant="caption">1</MKTypography> },
-            { value: 2, label: <MKTypography variant="caption">2</MKTypography> },
-            { value: 3, label: <MKTypography variant="caption">3</MKTypography> },
-            { value: 4, label: <MKTypography variant="caption">4</MKTypography> }
-          ]}
-          min={1}
-          max={4}
-          valueLabelDisplay="auto"
-          aria-labelledby="slider-cantidad-camaras"
+      <div style={{ padding: '0 15px' }}> {/* Cambiado a 20px para mayor separación */}
+      <Slider
+  value={cantidadCamaras || 0} // Usa 0 para representar "Vacío"
+  onChange={(e, value) => setCantidadCamaras(value === 0 ? null : value)} // Si es 0, lo convierte a null
+  step={1}
+  marks={[
+    {
+      value: 0,
+      label: (
+        <MKTypography
+          variant="caption"
           sx={{
-            width: '80%',  // Ajusta el ancho para hacerlo más corto
-            mx: 'auto'      // Centra horizontalmente
+            position: 'relative',
+            left: '-20px', // Mueve la etiqueta hacia la izquierda
           }}
-        />
+        >
+          (Vacío)
+        </MKTypography>
+      ),
+    },
+    { value: 1, label: <MKTypography variant="caption">1</MKTypography> },
+    { value: 2, label: <MKTypography variant="caption">2</MKTypography> },
+    { value: 3, label: <MKTypography variant="caption">3</MKTypography> },
+    { value: 4, label: <MKTypography variant="caption">4</MKTypography> },
+  ]}
+  min={0}
+  max={4}
+  valueLabelDisplay="auto"
+  aria-labelledby="slider-cantidad-camaras"
+  sx={{
+    width: '100%',
+    mx: 'auto',
+    '& .MuiSlider-markLabel': {
+      transform: 'translateY(10px)', // Ajusta la posición vertical de todas las etiquetas
+    },
+    '& .MuiSlider-mark': {
+      width: '8px', // Tamaño de los puntos
+      height: '8px',
+      borderRadius: '50%', // Forma redonda
+      backgroundColor: '#1976d2', // Azul
+    },
+    '& .MuiSlider-markActive': {
+      backgroundColor: '#115293', // Azul oscuro para puntos activos
+    },
+  }}
+/>
+
+
+
+
+
+
       </div>
 
       {/* Botón aplicar filtros */}

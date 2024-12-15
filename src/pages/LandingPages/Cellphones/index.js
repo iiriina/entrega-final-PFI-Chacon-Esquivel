@@ -10,7 +10,7 @@ import './index.css';
 import SideBarCelulares from 'components/SideBarCelulares';
 import { getCelulares } from 'controllers/getCelulares';
 import routes from "routes";
-
+ 
 function Cellphones() {
   const [searchQuery, setSearchQuery] = useState('');  
   const [products, setProducts] = useState([]);  

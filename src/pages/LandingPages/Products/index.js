@@ -41,8 +41,9 @@ function Products() {
 
   // para obtener productos cuando el componente se monta o cambia la página
   useEffect(() => {
-    fetchProducts({ query: searchQuery, page: currentPage });
-  }, [currentPage]);
+    fetchProducts({ query: searchQuery, ...filters, page: currentPage });
+  }, [currentPage, filters]); // Agregar filters aquí
+  
 
   // para manejar cambios en la búsqueda
   const handleSearchChange = (event) => {
@@ -55,26 +56,23 @@ function Products() {
     fetchProducts({ query: searchQuery, page: 1, ...filters });  // Establecer la página en 1 
   };
 
-  // para aplicar filtros desde la barra lateral
   const handleApplyFilters = (filters) => {
     const transformedFilters = {
-      query: searchQuery || '', 
+      query: searchQuery || '',
       min_price: filters.min_price || undefined,
       max_price: filters.max_price || undefined,
-      almacenamiento: filters.almacenamiento || undefined,  
-      RAM: filters.RAM || undefined  
+      almacenamiento: filters.almacenamiento || undefined,
+      RAM: filters.RAM || undefined,
     };
-
+  
     const cleanedFilters = Object.fromEntries(
       Object.entries(transformedFilters).filter(([, value]) => value !== undefined)
     );
-
-    console.log("Filtros aplicados:", cleanedFilters); 
-
-    setFilters(cleanedFilters); 
-    setCurrentPage(1); 
-    fetchProducts(cleanedFilters);
+  
+    setFilters(cleanedFilters); // Solo actualiza el estado de los filtros
+    setCurrentPage(1); // Reinicia a la página 1
   };
+  
 
   // manejar el cambio de página
   const handlePageChange = (event, value) => {
@@ -85,7 +83,7 @@ function Products() {
     <div className="mainDiv">
       <MKBox position="fixed" top="0.5rem" width="100%" zIndex={10}>
         <DefaultNavbar routes={routes} />
-      </MKBox>
+      </MKBox> 
       <MKBox component="section" py={0.5} mt={10}>
         <div className="divTransparenteBackground">
           <div className="background-container">
@@ -106,7 +104,7 @@ function Products() {
           <Grid container spacing={3}>
             {/* Sidebar de filtros */}
             <Grid item xs={12} md={3} lg={2} className="sidebar-container">
-              <Sidebar onApplyFilters={handleApplyFilters} />
+            <Sidebar onApplyFilters={handleApplyFilters} currentFilters={filters} />
             </Grid>
 
             {/* Listado de productos */}
