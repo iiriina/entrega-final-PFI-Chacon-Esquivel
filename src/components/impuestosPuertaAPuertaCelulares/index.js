@@ -366,7 +366,7 @@ if (tributosData) {
         <TableCell colSpan={3} align="right" style={{ fontWeight: "bold", color: "gray" }}>
             Total s/ Imp. Ganancias en ARS:
           </TableCell>
-          <TableCell align="center" style={{ fontWeight: "bold", color: "gray" }}>
+          <TableCell align="left" style={{ fontWeight: "bold", color: "gray" }}>
           ${(
 
                 ((productPrice * quantity + shippingCost + impuestoPAIS + derechosImportacion) * dolarOficial + tasaCorreo) *
@@ -465,7 +465,7 @@ if (tributosData) {
             Total de compra en el mercado nacional (ARS):
           </TableCell>
           <TableCell
-            align="center"
+            align="left"
             style={{
               fontWeight: "bold",
               backgroundColor:
